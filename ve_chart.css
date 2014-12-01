@@ -1,0 +1,8 @@
+.ve-chart-right {
+  float: left;
+  width: 66%;
+}
+.ve-chart-left {
+  float: left;
+  width: 33%;
+}
