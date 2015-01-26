@@ -8,72 +8,40 @@
 include_once 'visualization_entity_charts.features.inc';
 
 /**
- * Implements hook_menu().
- */
-function visualization_entity_charts_menu() {
-  $items = array();
-
-  $items['resource_by_nid/%'] = array(
-    'title' => 'Resource by NID',
-    'page callback' => 'visualization_entity_charts_resource_by_nid',
-    'page arguments' => array(1),
-    'access arguments' => array('access content'),
-    'type' => MENU_SUGGESTED_ITEM,
-  );
-
-  return $items;
-}
-
-/**
- * Returns resource given nid.
- */
-function visualization_entity_charts_resource_by_nid($nid) {
-  if ($cache = cache_get('resource_by_nid_' . $nid)) {
-    drupal_json_output($cache->data);
-  }
-  else {
-    $node = node_load($nid);
-    if ($file = dkan_datastore_file_field($node)) {
-      $status = dkan_datastore_status($node);
-      if ($status == DKAN_DATASTORE_EXISTS) {
-        $output = array(
-          'type' => 'api',
-          'url' => '/api/action/datastore/search.json?resource_id=' . $node->uuid,
-          'uuid' => $node->uuid,
-        );
-      }
-      else {
-        $output = array(
-          'type' => 'file',
-          'url' => file_create_url($file->uri),
-        );
-      }
-      cache_set('resource_by_nid_' . $nid, $output, 'cache');
-      return drupal_json_output($output);
-    }
-    return drupal_json_output(array());
-  }
-}
-
-
-/**
  * Implements hook_form_alter().
  */
 function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
   switch ($form_id) {
     case 'eck__entity__form_add_visualization_ve_chart':
     case 'eck__entity__form_edit_visualization_ve_chart':
-      $form['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
-      $form['#attached']['js'][] = drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts.js';
       $form['#attached']['libraries_load'][] = array('recline');
       $form['#attached']['libraries_load'][] = array('d3');
       $form['#attached']['libraries_load'][] = array('nvd3');
-      $form['#attached']['libraries_load'][] = array('recline.view.nvd3.js');
+      $form['#attached']['libraries_load'][] = array('reclineViewNvd3');
+      $form['#attached']['libraries_load'][] = array('select2');
+      $form['#attached']['libraries_load'][] = array('csv');
+      $form['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
+      drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts.js', array('weight' => 100));
       break;
 
   }
 }
+/**
+ * Implements hook_entity_view().
+ */
+function visualization_entity_charts_entity_view($entity, $type, $view_mode, $langcode) {
+  if ($type == 'visualization' && $entity->type == 've_chart') {
+    $entity->content['#prefix'] = '<div id="graph"></div>';
 
+    libraries_load('recline');
+    libraries_load('d3');
+    libraries_load('nvd3');
+    libraries_load('reclineViewNvd3');
+    libraries_load('csv');
+    $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
+    drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts_view.js', array('weight' => 100));
+  }
+}
 /**
  * Implements hook_theme().
  */
@@ -106,6 +74,7 @@ function visualization_entity_charts_libraries_info() {
       'file' => 'package.json',
       'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
     ),
+    'dependencies' => array('d3'),
     'files' => array(
       'js' => array(
         'nv.d3.min.js',
@@ -129,7 +98,7 @@ function visualization_entity_charts_libraries_info() {
       ),
     ),
   );
-  $libraries['recline.view.nvd3.js'] = array(
+  $libraries['reclineViewNvd3'] = array(
     'name' => 'recline.view.nvd3.js',
     'vendor url' => 'https://github.com/NuCivic/recline.view.nvd3.js',
     'download url' => 'https://github.com/NuCivic/recline.view.nvd3.js/archive/master.zip',
@@ -143,5 +112,102 @@ function visualization_entity_charts_libraries_info() {
       ),
     ),
   );
+  $libraries['select2'] = array(
+    'name' => 'select2',
+    'vendor url' => 'https://github.com/select2/select2/tree/4.0.0-beta.1',
+    'version' => '4.0.0-beta.1',
+    'files' => array(
+      'js' => array(
+        'dist/js/select2.full.js',
+      ),
+      'css' => array(
+        'dist/css/select2.min.css',
+      ),
+    ),
+  );
+  $libraries['csv'] = array(
+    'name' => 'csv',
+    'vendor url' => 'https://github.com/okfn/csv.js',
+    'version' => '0.0.1',
+    'files' => array(
+      'js' => array(
+        'csv.js',
+      ),
+    ),
+  );
   return $libraries;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function visualization_entity_charts_block_info() {
+  $blocks = array();
+  $blocks['ve_chart_button'] = array(
+    'info' => t('Viz Entity Chart Button'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function visualization_entity_charts_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 've_chart_button':
+      $block['subject'] = '';
+      $block['content'] = visualization_entity_charts_button_block();
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Creates viz entity chart button.
+ */
+function visualization_entity_charts_button_block() {
+  return 'button here';
+}
+
+/**
+ * Implements hook_libraries_info_alter().
+ */
+function visualization_entity_charts_libraries_info_alter(&$libraries) {
+  if (isset($libraries['recline']['files']['js'][11]) && $libraries['recline']['files']['js'][11] == 'vendor/timeline/js/timeline.js') {
+    unset($libraries['recline']['files']['js'][11]);
+  }
+}
+
+/**
+ * Preprocess for chart add form.
+ */
+function template_preprocess_eck__entity__form_add_visualization_ve_chart(&$vars) {
+  template_preprocess_eck__entity__form_edit_visualization_ve_chart($vars);
+}
+
+/**
+ * Preprocess for chart edit form.
+ */
+function template_preprocess_eck__entity__form_edit_visualization_ve_chart(&$vars) {
+  $form = $vars['form'];
+  $vars['save'] = $form['actions'];
+  $vars['title'] = $form['title'];
+  $vars['settings'] = $form['field_ve_settings'];
+  unset($vars['form']['title']);
+  unset($vars['form']['field_ve_settings']);
+  unset($vars['form']['actions']);
+  $available_fields = field_info_instances('visualization', 've_chart');
+  unset($available_fields['field_ve_settings']);
+  $fields = array();
+  $vars['fields'] = array();
+  foreach ($available_fields as $field => $instance) {
+    $fields[$field] = $form[$field]['#weight'];
+  }
+  asort($fields);
+  foreach ($fields as $field => $weight) {
+    $vars['fields'][$field] = $form[$field];
+    unset($vars['form'][$field]);
+  }
 }

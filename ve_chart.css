@@ -1,8 +1,21 @@
+.col-sm-9,
 .ve-chart-right {
   float: left;
-  width: 66%;
+  width: 75%;
 }
+.col-sm-3,
 .ve-chart-left {
   float: left;
-  width: 33%;
+  width: 25%;
+}
+.col-sm-12 {
+  clear: both;
+}
+.region-content #eck-entity-form-edit-visualization-ve-chart ul {
+  padding-left: 0;
+}
+svg {
+  width: auto;
+  height: auto;
+  position: relative;
 }
