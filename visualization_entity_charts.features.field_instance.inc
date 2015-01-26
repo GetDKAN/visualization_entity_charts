@@ -10,112 +10,19 @@
 function visualization_entity_charts_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'visualization-ve_chart-field_ve_group'
-  $field_instances['visualization-ve_chart-field_ve_group'] = array(
+  // Exported field_instance: 'visualization-ve_chart-field_description'
+  $field_instances['visualization-ve_chart-field_description'] = array(
     'bundle' => 've_chart',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => 'Decide whether or not to group common values for the Series Fields.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 8,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'visualization',
-    'field_name' => 'field_ve_group',
-    'label' => 'Group',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'display_label' => 0,
-      ),
-      'type' => 'options_onoff',
-      'weight' => 7,
-    ),
-  );
-
-  // Exported field_instance: 'visualization-ve_chart-field_ve_height'
-  $field_instances['visualization-ve_chart-field_ve_height'] = array(
-    'bundle' => 've_chart',
-    'default_value' => array(
-      0 => array(
-        'value' => 500,
-      ),
-    ),
+    'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => ' ',
-        ),
-        'type' => 'number_integer',
-        'weight' => 10,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'visualization',
-    'field_name' => 'field_ve_height',
-    'label' => 'Height',
-    'required' => 0,
-    'settings' => array(
-      'max' => 9999,
-      'min' => 50,
-      'prefix' => '',
-      'suffix' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'number',
-      'settings' => array(),
-      'type' => 'number',
-      'weight' => 9,
-    ),
-  );
-
-  // Exported field_instance: 'visualization-ve_chart-field_ve_series_fields'
-  $field_instances['visualization-ve_chart-field_ve_series_fields'] = array(
-    'bundle' => 've_chart',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Data that will appear as the Y-Axis variables. Separate multiple fields with commas.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 12,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -125,8 +32,8 @@ function visualization_entity_charts_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'visualization',
-    'field_name' => 'field_ve_series_fields',
-    'label' => 'Series Fields',
+    'field_name' => 'field_description',
+    'label' => 'Description',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -136,78 +43,25 @@ function visualization_entity_charts_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'rows' => 2,
       ),
-      'type' => 'text_textfield',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'visualization-ve_chart-field_ve_type'
-  $field_instances['visualization-ve_chart-field_ve_type'] = array(
-    'bundle' => 've_chart',
-    'default_value' => array(
-      0 => array(
-        'value' => 'discreteBarChart',
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'visualization',
-    'field_name' => 'field_ve_type',
-    'label' => 'Type',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'apply_chosen' => 0,
-      ),
-      'type' => 'options_select',
+      'type' => 'text_textarea',
       'weight' => 1,
     ),
   );
 
-  // Exported field_instance: 'visualization-ve_chart-field_ve_width'
-  $field_instances['visualization-ve_chart-field_ve_width'] = array(
+  // Exported field_instance: 'visualization-ve_chart-field_file'
+  $field_instances['visualization-ve_chart-field_file'] = array(
     'bundle' => 've_chart',
-    'default_value' => array(
-      0 => array(
-        'value' => 500,
-      ),
-    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => ' ',
-        ),
-        'type' => 'number_integer',
-        'weight' => 9,
+        'label' => 'inline',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 11,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -217,38 +71,40 @@ function visualization_entity_charts_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'visualization',
-    'field_name' => 'field_ve_width',
-    'label' => 'Width',
+    'field_name' => 'field_file',
+    'label' => 'File',
     'required' => 0,
     'settings' => array(
-      'max' => 9999,
-      'min' => 50,
-      'prefix' => '',
-      'suffix' => '',
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'csv',
+      'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 0,
-      'module' => 'number',
-      'settings' => array(),
-      'type' => 'number',
-      'weight' => 8,
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 2,
     ),
   );
 
-  // Exported field_instance: 'visualization-ve_chart-field_ve_x_field'
-  $field_instances['visualization-ve_chart-field_ve_x_field'] = array(
+  // Exported field_instance: 'visualization-ve_chart-field_ve_settings'
+  $field_instances['visualization-ve_chart-field_ve_settings'] = array(
     'bundle' => 've_chart',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Data that will be on the bottom or X-Axis of the graph.',
+    'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 6,
+        'weight' => 13,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -258,8 +114,8 @@ function visualization_entity_charts_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'visualization',
-    'field_name' => 'field_ve_x_field',
-    'label' => 'X-Field',
+    'field_name' => 'field_ve_settings',
+    'label' => 'Settings',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -269,24 +125,18 @@ function visualization_entity_charts_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 40,
+        'rows' => 3,
       ),
-      'type' => 'text_textfield',
-      'weight' => 2,
+      'type' => 'text_textarea',
+      'weight' => 3,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Data that will appear as the Y-Axis variables. Separate multiple fields with commas.');
-  t('Data that will be on the bottom or X-Axis of the graph.');
-  t('Decide whether or not to group common values for the Series Fields.');
-  t('Group');
-  t('Height');
-  t('Series Fields');
-  t('Type');
-  t('Width');
-  t('X-Field');
+  t('Description');
+  t('File');
+  t('Settings');
 
   return $field_instances;
 }
