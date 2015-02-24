@@ -18,7 +18,6 @@ function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
       $form['#attached']['libraries_load'][] = array('d3');
       $form['#attached']['libraries_load'][] = array('nvd3');
       $form['#attached']['libraries_load'][] = array('reclineViewNvd3');
-      $form['#attached']['libraries_load'][] = array('select2');
       $form['#attached']['libraries_load'][] = array('csv');
       $form['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
       drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts.js', array('weight' => 100));
@@ -31,8 +30,7 @@ function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
  */
 function visualization_entity_charts_entity_view($entity, $type, $view_mode, $langcode) {
   if ($type == 'visualization' && $entity->type == 've_chart') {
-    $entity->content['#prefix'] = '<div id="graph"></div>';
-
+    $entity->content['#suffix'] = '<div id="graph"></div>';
     libraries_load('recline');
     libraries_load('d3');
     libraries_load('nvd3');
@@ -77,10 +75,10 @@ function visualization_entity_charts_libraries_info() {
     'dependencies' => array('d3'),
     'files' => array(
       'js' => array(
-        'nv.d3.min.js',
+        'build/nv.d3.min.js',
       ),
       'css' => array(
-        'nv.d3.min.css',
+        'build/nv.d3.min.css',
       ),
     ),
   );
@@ -108,7 +106,28 @@ function visualization_entity_charts_libraries_info() {
     ),
     'files' => array(
       'js' => array(
-        'src/recline.view.nvd3.js',
+        'vendor/lodash/dist/lodash.compat.min.js',
+        'vendor/lodash.data/dist/lodash.data.min.js',
+        'dist/recline.view.nvd3.min.js',
+        'vendor/chosen_v1.3.0/chosen.jquery.js',
+        'vendor/mustache/mustache.js',
+        'vendor/moment/moment.js',
+        'vendor/slickgrid/slick.core.js',
+        'vendor/slickgrid/slick.formatters.js',
+        'vendor/slickgrid/slick.editors.js',
+        'vendor/slickgrid/slick.grid.js',
+        'vendor/slickgrid/lib/jquery-ui-1.8.16.custom.min.js',
+        'vendor/slickgrid/lib/jquery.event.drag-2.0.min.js',
+        'vendor/slickgrid/lib/jquery.event.drop-2.0.min.js',
+        'vendor/slickgrid/plugins/slick.rowselectionmodel.js',
+        'vendor/slickgrid/plugins/slick.rowmovemanager.js',
+      ),
+      'css' => array(
+        'vendor/nvd3/nv.d3.css',
+        'css/style.css',
+        'css/slickgrid.css',
+        'vendor/chosen-bootstrap/chosen.bootstrap.css',
+        'vendor/slickgrid/slick.grid.css'
       ),
     ),
   );
@@ -151,32 +170,13 @@ function visualization_entity_charts_block_info() {
 }
 
 /**
- * Implements hook_block_view().
- */
-function visualization_entity_charts_block_view($delta = '') {
-  $block = array();
-  switch ($delta) {
-    case 've_chart_button':
-      $block['subject'] = '';
-      $block['content'] = visualization_entity_charts_button_block();
-      break;
-  }
-  return $block;
-}
-
-/**
- * Creates viz entity chart button.
- */
-function visualization_entity_charts_button_block() {
-  return 'button here';
-}
-
-/**
  * Implements hook_libraries_info_alter().
  */
 function visualization_entity_charts_libraries_info_alter(&$libraries) {
-  if (isset($libraries['recline']['files']['js'][11]) && $libraries['recline']['files']['js'][11] == 'vendor/timeline/js/timeline.js') {
-    unset($libraries['recline']['files']['js'][11]);
+  if (isset($libraries['recline']['files']['js'])) {
+    $recline = $libraries['recline']['files']['js'];
+    $index = array_search('vendor/timeline/js/timeline.js', $recline);
+    unset($libraries['recline']['files']['js'][$index]);
   }
 }
 

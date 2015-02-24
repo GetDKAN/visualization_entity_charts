@@ -14,6 +14,15 @@
 .region-content #eck-entity-form-edit-visualization-ve-chart ul {
   padding-left: 0;
 }
+.field-name-field-ve-settings{
+	display: none;
+}
+#chart-with-controls .tab-content{
+	overflow: hidden;
+}
+#iframe-shell{
+	overflow: hidden;
+}
 svg {
   width: auto;
   height: auto;
