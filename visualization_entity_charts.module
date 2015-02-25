@@ -19,6 +19,13 @@ function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
       $form['#attached']['libraries_load'][] = array('nvd3');
       $form['#attached']['libraries_load'][] = array('reclineViewNvd3');
       $form['#attached']['libraries_load'][] = array('csv');
+      $form['#attached']['libraries_load'][] = array('mustache');
+      $form['#attached']['libraries_load'][] = array('lodash');
+      $form['#attached']['libraries_load'][] = array('lodash_data');
+      $form['#attached']['libraries_load'][] = array('moment');
+      $form['#attached']['libraries_load'][] = array('slickgrid');
+      $form['#attached']['libraries_load'][] = array('chosen_bootstrap');
+
       $form['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
       drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts.js', array('weight' => 100));
       break;
@@ -36,6 +43,14 @@ function visualization_entity_charts_entity_view($entity, $type, $view_mode, $la
     libraries_load('nvd3');
     libraries_load('reclineViewNvd3');
     libraries_load('csv');
+    libraries_load('mustache');
+    libraries_load('lodash');
+    libraries_load('lodash_data');
+    libraries_load('chosen');
+    libraries_load('moment');
+    libraries_load('slickgrid');
+    libraries_load('chosen_bootstrap');
+
     $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
     drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts_view.js', array('weight' => 100));
   }
@@ -106,44 +121,130 @@ function visualization_entity_charts_libraries_info() {
     ),
     'files' => array(
       'js' => array(
-        'vendor/lodash/dist/lodash.compat.min.js',
-        'vendor/lodash.data/dist/lodash.data.min.js',
         'dist/recline.view.nvd3.min.js',
-        'vendor/chosen_v1.3.0/chosen.jquery.js',
-        'vendor/mustache/mustache.js',
-        'vendor/moment/moment.js',
-        'vendor/slickgrid/slick.core.js',
-        'vendor/slickgrid/slick.formatters.js',
-        'vendor/slickgrid/slick.editors.js',
-        'vendor/slickgrid/slick.grid.js',
-        'vendor/slickgrid/lib/jquery-ui-1.8.16.custom.min.js',
-        'vendor/slickgrid/lib/jquery.event.drag-2.0.min.js',
-        'vendor/slickgrid/lib/jquery.event.drop-2.0.min.js',
-        'vendor/slickgrid/plugins/slick.rowselectionmodel.js',
-        'vendor/slickgrid/plugins/slick.rowmovemanager.js',
       ),
       'css' => array(
-        'vendor/nvd3/nv.d3.css',
         'css/style.css',
-        'css/slickgrid.css',
-        'vendor/chosen-bootstrap/chosen.bootstrap.css',
-        'vendor/slickgrid/slick.grid.css'
       ),
     ),
   );
-  $libraries['select2'] = array(
-    'name' => 'select2',
-    'vendor url' => 'https://github.com/select2/select2/tree/4.0.0-beta.1',
-    'version' => '4.0.0-beta.1',
+
+  $libraries['lodash'] = array(
+    'name' => 'lodash',
+    'vendor url' => 'https://github.com/lodash/lodash',
+    'download url' => 'https://github.com/lodash/lodash/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
     'files' => array(
       'js' => array(
-        'dist/js/select2.full.js',
-      ),
-      'css' => array(
-        'dist/css/select2.min.css',
+        'dist/lodash.compat.min.js',
       ),
     ),
   );
+
+  $libraries['lodash_data'] = array(
+    'name' => 'lodashdata',
+    'vendor url' => 'https://github.com/NuCivic/lodash.data',
+    'download url' => 'https://github.com/NuCivic/lodash.data/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'dist/lodash.data.min.js',
+      ),
+    ),
+  );
+
+  $libraries['slickgrid'] = array(
+    'name' => 'SlickGrid',
+    'vendor url' => 'https://github.com/mleibman/SlickGrid',
+    'download url' => 'https://github.com/mleibman/SlickGrid/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'slick.grid.js',
+      'pattern' => '/SlickGrid v(\d+\.\d+)/',
+    ),
+    'files' => array(
+      'js' => array(
+        'slick.core.js',
+        'slick.formatters.js',
+        'slick.editors.js',
+        'slick.grid.js',
+        'lib/jquery-ui-1.8.16.custom.min.js',
+        'lib/jquery.event.drag-2.2.js',
+        'lib/jquery.event.drop-2.2.js',
+        'plugins/slick.rowselectionmodel.js',
+        'plugins/slick.rowmovemanager.js',
+      ),
+      'css' => array(
+        'slick.grid.css'
+      ),
+    ),
+  );
+
+  $libraries['moment'] = array(
+    'name' => 'moment',
+    'vendor url' => 'https://github.com/moment/moment',
+    'download url' => 'https://github.com/moment/moment/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'min/moment.min.js',
+      ),
+    ),
+  );
+
+  $libraries['mustache'] = array(
+    'name' => 'mustache',
+    'vendor url' => 'http://github.com/janl/mustache.js',
+    'download url' => 'http://github.com/janl/mustache.js.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'mustache.min.js',
+      ),
+    ),
+  );
+
+  $libraries['chosen'] = array(
+    'name' => 'chosen',
+    'vendor url' => 'https://github.com/harvesthq/chosen',
+    'download url' => 'https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip',
+    'version arguments' => array(
+      'file' => 'chosen.jquery.min.js',
+      'pattern' => '/Chosen v(\d+\.\d+\.\d+)/',
+    ),
+    'files' => array(
+      'js' => array(
+        'chosen.jquery.min.js',
+      ),
+    ),
+  );
+
+  $libraries['chosen_bootstrap'] = array(
+    'name' => 'chosen_bootstrap',
+    'vendor url' => 'https://github.com/dbtek/chosen-bootstrap',
+    'download url' => 'https://github.com/dbtek/chosen-bootstrap.git',
+    'version arguments' => array(
+      'file' => 'bower.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'css' => array(
+        'chosen.bootstrap.min.css',
+      ),
+    ),
+  );
+
   $libraries['csv'] = array(
     'name' => 'csv',
     'vendor url' => 'https://github.com/okfn/csv.js',
@@ -154,6 +255,7 @@ function visualization_entity_charts_libraries_info() {
       ),
     ),
   );
+
   return $libraries;
 }
 
