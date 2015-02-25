@@ -129,6 +129,25 @@ function visualization_entity_charts_libraries_info() {
     ),
   );
 
+  $libraries['recline'] = array(
+    'name' => 'recline',
+    'vendor url' => 'https://github.com/okfn/recline',
+    'download url' => 'https://github.com/okfn/recline/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'dist/recline.js',
+        'dist/recline.dataset.js',
+      ),
+      'css' => (
+        'dist/recline.css'
+      )
+    ),
+  );
+
   $libraries['lodash'] = array(
     'name' => 'lodash',
     'vendor url' => 'https://github.com/lodash/lodash',

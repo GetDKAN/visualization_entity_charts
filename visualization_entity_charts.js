@@ -9,7 +9,7 @@
       var currentState = $('#edit-field-ve-settings-und-0-value').val();
       var state;
 
-      if(currentState !== ''){
+      if(currentState){
         state = new recline.Model.ObjectState(JSON.parse(currentState));
       } else {
         state = new recline.Model.ObjectState();

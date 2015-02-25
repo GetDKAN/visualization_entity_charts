@@ -56,3 +56,7 @@ libraries[chosen_bootstrap][download][type] = git
 libraries[chosen_bootstrap][download][url] = https://github.com/dbtek/chosen-bootstrap.git
 libraries[chosen_bootstrap][destination] = libraries
 
+libraries[recline][type] = libraries
+libraries[recline][download][type] = git
+libraries[recline][download][url] = "https://github.com/okfn/recline.git"
+libraries[recline][download][revision] = "5b28edf072f7c06b8ea213a4048d97abc0424300"
