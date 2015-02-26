@@ -21,6 +21,11 @@ libraries[lodash][download][type] = git
 libraries[lodash][download][url] = "https://github.com/lodash/lodash.git"
 libraries[lodash][download][revision] = "e21e993729861a2bc1d01c858cfabce7a27d2861"
 
+libraries[backbone][type] = libraries
+libraries[backbone][download][type] = git
+libraries[backbone][download][url] = "https://github.com/jashkenas/backbone.git"
+libraries[backbone][download][revision] = "e109f6d3e7a366f933f1f34405ca97effecae6c5"
+
 libraries[lodash_data][type] = libraries
 libraries[lodash_data][download][type] = git
 libraries[lodash_data][download][url] = "https://github.com/NuCivic/lodash.data.git"
