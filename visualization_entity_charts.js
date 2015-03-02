@@ -3,7 +3,7 @@
  * Provides options for chart visualization.
  */
 
-;(function ($) {
+(function ($) {
   Drupal.behaviors.VisualizationEntityCharts = {
     attach: function (context) {
       var currentState = $('#edit-field-ve-settings-und-0-value').val();
@@ -28,7 +28,7 @@
       msv.addStep(new ChartOptionsView(sharedObject));
       msv.render();
 
-      // oh my god!!
+      // Oh my god!!
       $(document).ajaxComplete(function(e, xhr, settings) {
         if(settings.url && settings.url.search('/file/ajax/field_file') !== -1){
           var url = $('.file-widget a').prop('href');

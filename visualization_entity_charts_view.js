@@ -3,7 +3,7 @@
  * Provides options for chart visualization.
  */
 
-;(function ($) {
+(function ($) {
   Drupal.behaviors.VisualizationEntityChartsView = {
     attach: function (context) {
       var isIframe = !$('.content').is(':visible');
@@ -36,8 +36,6 @@
 
         });
       }
-
-
     }
   };
 })(jQuery);
