@@ -3,6 +3,7 @@ description = Create charts using nvd3
 core = 7.x
 package = Other
 dependencies[] = recline
+dependencies[] = jquery_update
 dependencies[] = visualization_entity
 features[eck_bundle][] = visualization_ve_chart
 features[eck_entity_type][] = visualization
