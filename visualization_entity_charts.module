@@ -261,6 +261,9 @@ function visualization_entity_charts_libraries_info() {
       'js' => array(
         'chosen.jquery.min.js',
       ),
+      'css' => array(
+        'chosen.css',
+      ),
     ),
   );
 
