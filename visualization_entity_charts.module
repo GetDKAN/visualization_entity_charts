@@ -145,8 +145,6 @@ function visualization_entity_charts_libraries_info() {
       ),
       'css' => array(
         'dist/recline.css',
-        'vendor/bootstrap/2.3.2/css/bootstrap.css',
-        'vendor/bootstrap/2.3.2/css/bootstrap-responsive.css',
       ),
     ),
   );
