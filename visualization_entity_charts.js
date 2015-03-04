@@ -4,44 +4,74 @@
  */
 
 (function ($) {
+  var sharedObject;
+
   Drupal.behaviors.VisualizationEntityCharts = {
     attach: function (context) {
       var currentState = $('#edit-field-ve-settings-und-0-value').val();
       var state;
-
-      if(currentState){
+      var model;
+      if(currentState && !sharedObject){
         state = new recline.Model.ObjectState(JSON.parse(currentState));
-      } else {
+        model = state.get('model');
+
+        if(model && !model.records){
+          model = new recline.Model.Dataset(state.get('model'));
+          model.fetch().done(init);
+          state.set('model', model);
+          sharedObject = {state: state};
+        }
+      } else if(!sharedObject) {
         state = new recline.Model.ObjectState();
+        sharedObject = {state: state};
+        init();
       }
 
-      window.sharedObject = {state: state};
+      if(state) {
+        setActiveStep(state.get('step'));
+      } else {
+        setActiveStep(0);
+      }
 
-      window.msv = new MultiStageView({
-        state: state,
-        el: $('#steps')
-      });
+      function setActiveStep(n){
+        var $stages = $('#ve-chart-form .stages li');
+        $stages.removeClass('active');
+        $stages
+          .eq(n)
+          .addClass('active');
+      }
 
-      msv.addStep(new LoadDataView(sharedObject));
-      msv.addStep(new DataOptionsView(sharedObject));
-      msv.addStep(new ChooseChartView(sharedObject));
-      msv.addStep(new ChartOptionsView(sharedObject));
-      msv.render();
+      function init(){
+        var msv = new MultiStageView({
+          state: state,
+          el: $('#steps')
+        });
 
-      // Oh my god!!
-      $(document).ajaxComplete(function(e, xhr, settings) {
-        if(settings.url && settings.url.search('/file/ajax/field_file') !== -1){
-          var url = $('.file-widget a').prop('href');
-          var source = {backend:'csv', url: url};
-          sharedObject.state.set('source', source);
-          msv.render();
-        }
-      });
+        msv.addStep(new LoadDataView(sharedObject));
+        msv.addStep(new DataOptionsView(sharedObject));
+        msv.addStep(new ChooseChartView(sharedObject));
+        msv.addStep(new ChartOptionsView(sharedObject));
 
-      sharedObject.state.on('change', function(){
-        $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
-      });
+        msv.on('multistep:change', function(e){
+          setActiveStep(e.step);
+        });
+        msv.render();
 
+        // Oh my god!!
+        $(document).ajaxComplete(function(e, xhr, settings) {
+          if(settings.url && settings.url.search('/file/ajax/field_file') !== -1){
+            var url = $('.file-widget a').prop('href');
+            var source = {backend:'csv', url: url};
+            sharedObject.state.set('source', source);
+            msv.gotoStep(0);
+            msv.render();
+          }
+        });
+
+        sharedObject.state.on('change', function(){
+          $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
+        });
+      }
     }
   };
 })(jQuery);
