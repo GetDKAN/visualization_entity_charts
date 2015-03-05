@@ -29,13 +29,13 @@ libraries[backbone][download][revision] = "e109f6d3e7a366f933f1f34405ca97effecae
 libraries[lodash_data][type] = libraries
 libraries[lodash_data][download][type] = git
 libraries[lodash_data][download][url] = "https://github.com/NuCivic/lodash.data.git"
-libraries[lodash_data][download][revision] = "7ed5b92bdd7c1f08170599a4bcf7000eb751b0e4"
+libraries[lodash_data][download][revision] = "0dbe0701003b8a45037ab5fada630db2dbf75d9d"
 
 libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git
 libraries[reclineViewNvd3][download][url] = "https://github.com/NuCivic/recline.view.nvd3.js.git"
 libraries[reclineViewNvd3][download][branch] = new_ui
-libraries[reclineViewNvd3][download][revision] = "a89c06207b1d51c8120d812351cd67cf5958442a"
+libraries[reclineViewNvd3][download][revision] = "b3f09602db32c9fd7c3cfdcc83052441211eea82"
 
 libraries[slickgrid][type] = libraries
 libraries[slickgrid][download][type] = git
