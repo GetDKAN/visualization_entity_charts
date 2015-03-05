@@ -35,7 +35,7 @@ libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git
 libraries[reclineViewNvd3][download][url] = "https://github.com/NuCivic/recline.view.nvd3.js.git"
 libraries[reclineViewNvd3][download][branch] = new_ui
-libraries[reclineViewNvd3][download][revision] = "fd3ce3880a4142b19566616e9c829c6e077fe646"
+libraries[reclineViewNvd3][download][revision] = "a93bcd3c210e797d5ccd3fa268aa0f21d4710b48"
 
 libraries[slickgrid][type] = libraries
 libraries[slickgrid][download][type] = git
