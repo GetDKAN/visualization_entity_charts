@@ -29,7 +29,7 @@ libraries[backbone][download][revision] = "e109f6d3e7a366f933f1f34405ca97effecae
 libraries[lodash_data][type] = libraries
 libraries[lodash_data][download][type] = git
 libraries[lodash_data][download][url] = "https://github.com/NuCivic/lodash.data.git"
-libraries[lodash_data][download][revision] = "c712766772fed53a2395c4b42298cbaffbba3df2"
+libraries[lodash_data][download][revision] = "7ed5b92bdd7c1f08170599a4bcf7000eb751b0e4"
 
 libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git

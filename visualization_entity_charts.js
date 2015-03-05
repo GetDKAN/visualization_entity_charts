@@ -71,6 +71,8 @@
         sharedObject.state.on('change', function(){
           $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
         });
+        window.msv = msv;
+        window.sharedObject = sharedObject;
       }
     }
   };
