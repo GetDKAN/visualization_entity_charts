@@ -1,3 +1,9 @@
+/* Move to dkan global stylesheet*/
+.file-widget input.btn {
+	margin-left: 10px;
+}
+/* Move to dkan global stylesheet*/
+
 .field-name-field-ve-settings {
   display: none;
 }
@@ -10,7 +16,7 @@
 svg {
   width: auto;
   height: auto;
-  position: relative;
+  display: block;
 }
 
 #ve-chart-form .pane-content{

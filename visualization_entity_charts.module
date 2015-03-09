@@ -319,9 +319,9 @@ function visualization_entity_charts_libraries_info_alter(&$libraries) {
   }
   // Removing chosen to use chosen bootstrap instead.
   if(isset($libraries['chosen']['files']['css'])){
-    $chosen = $libraries['chosen']['files']['css'];
-    $index = array_search('chosen.css', $chosen);
-    unset($libraries['chosen']['files']['css'][$index]);
+    // $chosen = $libraries['chosen']['files']['css'];
+    // $index = array_search('chosen.css', $chosen);
+    // unset($libraries['chosen']['files']['css'][$index]);
   }
 }
 
