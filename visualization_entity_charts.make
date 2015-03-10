@@ -70,4 +70,4 @@ libraries[chosen_bootstrap][destination] = libraries
 libraries[recline][type] = libraries
 libraries[recline][download][type] = git
 libraries[recline][download][url] = "https://github.com/okfn/recline.git"
-libraries[recline][download][revision] = "5b28edf072f7c06b8ea213a4048d97abc0424300"
+libraries[recline][download][revision] = "350573a325a0eafccdda197b15c75338e2070c1e"
