@@ -143,9 +143,11 @@ function visualization_entity_charts_libraries_info() {
       'js' => array(
         'dist/recline.dataset.js',
         'dist/recline.js',
+        'vendor/bootstrap/3.2.0/js/bootstrap.js',
       ),
       'css' => array(
         'dist/recline.css',
+        'vendor/bootstrap/3.2.0/css/bootstrap.css',
       ),
     ),
   );
