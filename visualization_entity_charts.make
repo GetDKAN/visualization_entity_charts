@@ -16,6 +16,11 @@ libraries[csv][download][type] = git
 libraries[csv][download][url] = "https://github.com/okfn/csv.js.git"
 libraries[csv][download][revision] = "976b61384a1808eb464aca5876e5ea46c98deaee"
 
+libraries[gdocs][type] = libraries
+libraries[gdocs][download][type] = git
+libraries[gdocs][download][url] = "https://github.com/okfn/recline.backend.gdocs.git"
+libraries[gdocs][download][revision] = "e81bb237759353932834a38a0ec810441e0ada10"
+
 libraries[lodash][type] = libraries
 libraries[lodash][download][type] = git
 libraries[lodash][download][url] = "https://github.com/lodash/lodash.git"
@@ -35,7 +40,7 @@ libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git
 libraries[reclineViewNvd3][download][url] = "https://github.com/NuCivic/recline.view.nvd3.js.git"
 libraries[reclineViewNvd3][download][branch] = new_ui
-libraries[reclineViewNvd3][download][revision] = "a429a64e57a0f66d1c2fba4c0acd72229a32a12d"
+libraries[reclineViewNvd3][download][revision] = "55bfd128552be899c714b07ac8eefc38e0d3ff51"
 
 libraries[slickgrid][type] = libraries
 libraries[slickgrid][download][type] = git

@@ -31,6 +31,7 @@ function visualization_entity_charts_attach_libraries(&$element) {
     'd3',
     'nvd3',
     'reclineViewNvd3',
+    'gdocs',
     'csv',
     'mustache',
     'lodash_data',
@@ -287,6 +288,17 @@ function visualization_entity_charts_libraries_info() {
     'files' => array(
       'js' => array(
         'csv.js',
+      ),
+    ),
+  );
+
+  $libraries['gdocs'] = array(
+    'name' => 'gdocs',
+    'vendor url' => 'https://github.com/okfn/recline.backend.gdocs',
+    'version' => '0.0.1',
+    'files' => array(
+      'js' => array(
+        'backend.gdocs.js',
       ),
     ),
   );
