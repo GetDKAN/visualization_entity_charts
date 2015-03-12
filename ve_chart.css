@@ -1,21 +1,32 @@
-.col-sm-9,
-.ve-chart-right {
-  float: left;
-  width: 75%;
+/* Move to dkan global stylesheet*/
+.file-widget input.btn {
+	margin-left: 10px;
 }
-.col-sm-3,
-.ve-chart-left {
-  float: left;
-  width: 25%;
+/* Move to dkan global stylesheet*/
+
+.field-name-field-ve-settings {
+  display: none;
 }
-.col-sm-12 {
-  clear: both;
+#chart-with-controls .tab-content {
+  overflow: hidden;
 }
-.region-content #eck-entity-form-edit-visualization-ve-chart ul {
-  padding-left: 0;
+#iframe-shell {
+  overflow: hidden;
 }
 svg {
   width: auto;
   height: auto;
-  position: relative;
+  display: block;
+}
+
+#ve-chart-form .pane-content{
+  overflow: auto;
+}
+
+#ve-chart-form .stages li {
+  width: 25%;
+}
+
+.nvtooltip table * {
+  border: none;
 }

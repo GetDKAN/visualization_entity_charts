@@ -11,33 +11,51 @@ include_once 'visualization_entity_charts.features.inc';
  * Implements hook_form_alter().
  */
 function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
+
   switch ($form_id) {
     case 'eck__entity__form_add_visualization_ve_chart':
     case 'eck__entity__form_edit_visualization_ve_chart':
-      $form['#attached']['libraries_load'][] = array('recline');
-      $form['#attached']['libraries_load'][] = array('d3');
-      $form['#attached']['libraries_load'][] = array('nvd3');
-      $form['#attached']['libraries_load'][] = array('reclineViewNvd3');
-      $form['#attached']['libraries_load'][] = array('select2');
-      $form['#attached']['libraries_load'][] = array('csv');
-      $form['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
-      drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts.js', array('weight' => 100));
+      visualization_entity_charts_attach_libraries($form);
       break;
-
   }
 }
+
+/**
+ * Attach needed libraries to an element.
+ */
+function visualization_entity_charts_attach_libraries(&$element) {
+  $libraries = array(
+    'lodash',
+    'backbone',
+    'recline',
+    'd3',
+    'nvd3',
+    'reclineViewNvd3',
+    'gdocs',
+    'csv',
+    'mustache',
+    'lodash_data',
+    'chosen',
+    'moment',
+    'slickgrid',
+    'chosen_bootstrap',
+  );
+
+  foreach ($libraries as $library) {
+    $element['#attached']['libraries_load'][] = array($library);
+  }
+  $module_path = drupal_get_path('module', 'visualization_entity_charts');
+  $element['#attached']['css'][] = $module_path . '/ve_chart.css';
+  drupal_add_js($module_path . '/visualization_entity_charts.js', array('weight' => 100));
+}
+
 /**
  * Implements hook_entity_view().
  */
 function visualization_entity_charts_entity_view($entity, $type, $view_mode, $langcode) {
   if ($type == 'visualization' && $entity->type == 've_chart') {
-    $entity->content['#prefix'] = '<div id="graph"></div>';
-
-    libraries_load('recline');
-    libraries_load('d3');
-    libraries_load('nvd3');
-    libraries_load('reclineViewNvd3');
-    libraries_load('csv');
+    $entity->content['#suffix'] = '<div id="graph"></div>';
+    visualization_entity_charts_attach_libraries($entity->content);
     $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
     drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts_view.js', array('weight' => 100));
   }
@@ -108,23 +126,173 @@ function visualization_entity_charts_libraries_info() {
     ),
     'files' => array(
       'js' => array(
-        'src/recline.view.nvd3.js',
-      ),
-    ),
-  );
-  $libraries['select2'] = array(
-    'name' => 'select2',
-    'vendor url' => 'https://github.com/select2/select2/tree/4.0.0-beta.1',
-    'version' => '4.0.0-beta.1',
-    'files' => array(
-      'js' => array(
-        'dist/js/select2.full.js',
+        'dist/recline.view.nvd3.min.js',
       ),
       'css' => array(
-        'dist/css/select2.min.css',
+        'css/style.css',
       ),
     ),
   );
+
+  $libraries['recline'] = array(
+    'name' => 'Recline',
+    'vendor url' => 'http://reclinejs.com',
+    'download url' => 'https://github.com/okfn/recline/zipball/master',
+    'path' => '',
+    'version arguments' => array(
+      'file' => 'README.md',
+      'pattern' => '@v+([0-9][.][0-9])@',
+      'lines' => 49,
+    ),
+    'files' => array(
+      'css' => array(
+        'css/grid.css',
+        'css/slickgrid.css',
+        'css/flot.css',
+        'css/transform..css',
+        'css/map.css',
+        'css/multiview.css',
+        'css-site/pygments.css',
+        'vendor/bootstrap/3.2.0/css/bootstrap.css',
+      ),
+      'js' => array(
+        'vendor/bootstrap/3.2.0/js/bootstrap.js',
+        'dist/recline.js',
+      ),
+    ),
+  );
+
+  $libraries['lodash'] = array(
+    'name' => 'lodash',
+    'vendor url' => 'https://github.com/lodash/lodash',
+    'download url' => 'https://github.com/lodash/lodash/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'dist/lodash.compat.min.js',
+      ),
+    ),
+  );
+
+  $libraries['backbone'] = array(
+    'name' => 'backbone',
+    'vendor url' => 'https://github.com/jashkenas/backbone',
+    'download url' => 'https://github.com/jashkenas/backbone/archive/master.zip',
+    'version' => '1.1.2',
+    'files' => array(
+      'js' => array(
+        'backbone-min.js',
+      ),
+    ),
+  );
+
+  $libraries['lodash_data'] = array(
+    'name' => 'lodashdata',
+    'vendor url' => 'https://github.com/NuCivic/lodash.data',
+    'download url' => 'https://github.com/NuCivic/lodash.data/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'dist/lodash.data.min.js',
+      ),
+    ),
+  );
+
+  $libraries['slickgrid'] = array(
+    'name' => 'SlickGrid',
+    'vendor url' => 'https://github.com/mleibman/SlickGrid',
+    'download url' => 'https://github.com/mleibman/SlickGrid/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'slick.grid.js',
+      'pattern' => '/SlickGrid v(\d+\.\d+)/',
+    ),
+    'files' => array(
+      'js' => array(
+        'lib/jquery.event.drag-2.2.js',
+        'lib/jquery.event.drop-2.2.js',
+        'slick.core.js',
+        'slick.formatters.js',
+        'slick.editors.js',
+        'slick.grid.js',
+        'lib/jquery-ui-1.8.16.custom.min.js',
+        'plugins/slick.rowselectionmodel.js',
+        'plugins/slick.rowmovemanager.js',
+      ),
+      'css' => array(
+        'slick.grid.css',
+      ),
+    ),
+  );
+
+  $libraries['moment'] = array(
+    'name' => 'moment',
+    'vendor url' => 'https://github.com/moment/moment',
+    'download url' => 'https://github.com/moment/moment/archive/master.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'min/moment.min.js',
+      ),
+    ),
+  );
+
+  $libraries['mustache'] = array(
+    'name' => 'mustache',
+    'vendor url' => 'http://github.com/janl/mustache.js',
+    'download url' => 'http://github.com/janl/mustache.js.zip',
+    'version arguments' => array(
+      'file' => 'package.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'js' => array(
+        'mustache.min.js',
+      ),
+    ),
+  );
+
+  $libraries['chosen'] = array(
+    'name' => 'chosen',
+    'vendor url' => 'https://github.com/harvesthq/chosen',
+    'download url' => 'https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip',
+    'version arguments' => array(
+      'file' => 'chosen.jquery.min.js',
+      'pattern' => '/Chosen v(\d+\.\d+\.\d+)/',
+    ),
+    'files' => array(
+      'js' => array(
+        'chosen.jquery.min.js',
+      ),
+      'css' => array(
+        'chosen.css',
+      ),
+    ),
+  );
+
+  $libraries['chosen_bootstrap'] = array(
+    'name' => 'chosen_bootstrap',
+    'vendor url' => 'https://github.com/dbtek/chosen-bootstrap',
+    'download url' => 'https://github.com/dbtek/chosen-bootstrap.git',
+    'version arguments' => array(
+      'file' => 'bower.json',
+      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
+    ),
+    'files' => array(
+      'css' => array(
+        'chosen.bootstrap.min.css',
+      ),
+    ),
+  );
+
   $libraries['csv'] = array(
     'name' => 'csv',
     'vendor url' => 'https://github.com/okfn/csv.js',
@@ -135,6 +303,18 @@ function visualization_entity_charts_libraries_info() {
       ),
     ),
   );
+
+  $libraries['gdocs'] = array(
+    'name' => 'gdocs',
+    'vendor url' => 'https://github.com/okfn/recline.backend.gdocs',
+    'version' => '0.0.1',
+    'files' => array(
+      'js' => array(
+        'backend.gdocs.js',
+      ),
+    ),
+  );
+
   return $libraries;
 }
 
@@ -151,32 +331,21 @@ function visualization_entity_charts_block_info() {
 }
 
 /**
- * Implements hook_block_view().
- */
-function visualization_entity_charts_block_view($delta = '') {
-  $block = array();
-  switch ($delta) {
-    case 've_chart_button':
-      $block['subject'] = '';
-      $block['content'] = visualization_entity_charts_button_block();
-      break;
-  }
-  return $block;
-}
-
-/**
- * Creates viz entity chart button.
- */
-function visualization_entity_charts_button_block() {
-  return 'button here';
-}
-
-/**
  * Implements hook_libraries_info_alter().
  */
 function visualization_entity_charts_libraries_info_alter(&$libraries) {
-  if (isset($libraries['recline']['files']['js'][11]) && $libraries['recline']['files']['js'][11] == 'vendor/timeline/js/timeline.js') {
-    unset($libraries['recline']['files']['js'][11]);
+  if (isset($libraries['recline']['files']['js'])) {
+    $recline = $libraries['recline']['files']['js'];
+
+    // This file breaks the javascript site.
+    $index = array_search('vendor/timeline/js/timeline.js', $recline);
+    unset($libraries['recline']['files']['js'][$index]);
+  }
+  // Removing chosen to use chosen bootstrap instead.
+  if(isset($libraries['chosen']['files']['css'])){
+    // $chosen = $libraries['chosen']['files']['css'];
+    // $index = array_search('chosen.css', $chosen);
+    // unset($libraries['chosen']['files']['css'][$index]);
   }
 }
 
@@ -192,22 +361,7 @@ function template_preprocess_eck__entity__form_add_visualization_ve_chart(&$vars
  */
 function template_preprocess_eck__entity__form_edit_visualization_ve_chart(&$vars) {
   $form = $vars['form'];
-  $vars['save'] = $form['actions'];
-  $vars['title'] = $form['title'];
-  $vars['settings'] = $form['field_ve_settings'];
-  unset($vars['form']['title']);
-  unset($vars['form']['field_ve_settings']);
+  $form = visualization_entity_charts_attach_libraries($form);
   unset($vars['form']['actions']);
-  $available_fields = field_info_instances('visualization', 've_chart');
-  unset($available_fields['field_ve_settings']);
-  $fields = array();
-  $vars['fields'] = array();
-  foreach ($available_fields as $field => $instance) {
-    $fields[$field] = $form[$field]['#weight'];
-  }
-  asort($fields);
-  foreach ($fields as $field => $weight) {
-    $vars['fields'][$field] = $form[$field];
-    unset($vars['form'][$field]);
-  }
+  unset($vars['form']['submit']);
 }

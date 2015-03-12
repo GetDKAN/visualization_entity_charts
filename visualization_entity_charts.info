@@ -1,14 +1,10 @@
 name = Visualization Entity Charts
+description = Create charts using nvd3
 core = 7.x
 package = Other
-dependencies[] = eck
-dependencies[] = entityreference
-dependencies[] = features
-dependencies[] = file
-dependencies[] = list
-dependencies[] = number
-dependencies[] = options
 dependencies[] = recline
+dependencies[] = jquery_update
+dependencies[] = visualization_entity
 features[eck_bundle][] = visualization_ve_chart
 features[eck_entity_type][] = visualization
 features[features_api][] = api:2
