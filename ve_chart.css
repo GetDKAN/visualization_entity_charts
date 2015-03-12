@@ -26,3 +26,7 @@ svg {
 #ve-chart-form .stages li {
   width: 25%;
 }
+
+.nvtooltip table * {
+  border: none;
+}

@@ -135,19 +135,29 @@ function visualization_entity_charts_libraries_info() {
   );
 
   $libraries['recline'] = array(
-    'name' => 'recline',
-    'vendor url' => 'https://github.com/okfn/recline',
-    'download url' => 'https://github.com/okfn/recline/archive/master.zip',
-    'version' => '0.7.0',
+    'name' => 'Recline',
+    'vendor url' => 'http://reclinejs.com',
+    'download url' => 'https://github.com/okfn/recline/zipball/master',
+    'path' => '',
+    'version arguments' => array(
+      'file' => 'README.md',
+      'pattern' => '@v+([0-9][.][0-9])@',
+      'lines' => 49,
+    ),
     'files' => array(
-      'js' => array(
-        'dist/recline.dataset.js',
-        'dist/recline.js',
-        'vendor/bootstrap/3.2.0/js/bootstrap.js',
-      ),
       'css' => array(
-        'dist/recline.css',
+        'css/grid.css',
+        'css/slickgrid.css',
+        'css/flot.css',
+        'css/transform..css',
+        'css/map.css',
+        'css/multiview.css',
+        'css-site/pygments.css',
         'vendor/bootstrap/3.2.0/css/bootstrap.css',
+      ),
+      'js' => array(
+        'vendor/bootstrap/3.2.0/js/bootstrap.js',
+        'dist/recline.js',
       ),
     ),
   );
