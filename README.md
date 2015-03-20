@@ -2,7 +2,7 @@
 This modules provides the ability to create embedable NVD3 charts.
 
 ### Installation 
-- Make sure you have [visualization_entity](https://github.com/NuCivic/visualization_entity) module already installed 
+- Make sure you have [visualization_entity](https://github.com/NuCivic/visualization_entity) module already installed and enabled.
 
 ## Install from github zip
 ```
