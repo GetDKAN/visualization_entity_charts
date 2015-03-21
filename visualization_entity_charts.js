@@ -17,9 +17,21 @@
 
         if(model && !model.records){
           model = new recline.Model.Dataset(state.get('model'));
-          model.fetch().done(init);
-          state.set('model', model);
-          sharedObject = {state: state};
+
+          // Hack: check if the file exists before fetch.
+          // CSV.JS does not return an ajax promise then
+          // we can't know if the request fails.
+          $.get(state.get('model').url)
+          .done(function(){
+            model.fetch().done(init);
+            state.set('model', model);
+            sharedObject = {state: state};
+          })
+          .fail(function(){
+            sharedObject = {state: state};
+            sharedObject.state.set({step:0});
+            init();
+          });
         }
       } else if(!sharedObject) {
         state = new recline.Model.ObjectState();
