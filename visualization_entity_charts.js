@@ -16,7 +16,10 @@
         model = state.get('model');
 
         if(model && !model.records){
-          model = new recline.Model.Dataset(state.get('model'));
+          // Ensure url is protocol agnostic
+          model = state.get('model');
+          model.url = cleanURL(model.url);
+          model = new recline.Model.Dataset(model);
 
           // Hack: check if the file exists before fetch.
           // CSV.JS does not return an ajax promise then
@@ -43,6 +46,14 @@
         setActiveStep(state.get('step'));
       } else {
         setActiveStep(0);
+      }
+
+      function cleanURL(url){
+        var haveProtocol = new RegExp('^(?:[a-z]+:)?//', 'i');
+        if(haveProtocol.test(url)){
+          url = url.replace(haveProtocol, '//');
+        }
+        return url;
       }
 
       function setActiveStep(n){

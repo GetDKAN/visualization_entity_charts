@@ -23,7 +23,9 @@
           state.set('width', $('.field-name-field-ve-settings').width());
         }
 
-        var dataset = new recline.Model.Dataset(state.get('source'));
+        var model = state.get('source');
+        model.url = cleanURL(model.url);
+        var dataset = new recline.Model.Dataset(model);
         var graph = null;
 
         dataset.fetch().done(function(dataset){
@@ -35,6 +37,13 @@
           graph.render();
 
         });
+      }
+      function cleanURL(url){
+        var haveProtocol = new RegExp('^(?:[a-z]+:)?//', 'i');
+        if(haveProtocol.test(url)){
+          url = url.replace(haveProtocol, '//');
+        }
+        return url;
       }
     }
   };
