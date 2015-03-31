@@ -47,7 +47,7 @@ libraries[lodash_data][download][revision] = "0dbe0701003b8a45037ab5fada630db2db
 libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git
 libraries[reclineViewNvd3][download][url] = "https://github.com/NuCivic/recline.view.nvd3.js.git"
-libraries[reclineViewNvd3][download][revision] = "9fd02d3cf75243a6028046d671bb42e8192bf0b6"
+libraries[reclineViewNvd3][download][revision] = "33acf506137648b222486171af6b9f9f6c51c10f"
 
 # SLICKGRID
 libraries[slickgrid][type] = libraries
