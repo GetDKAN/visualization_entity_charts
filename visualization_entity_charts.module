@@ -45,8 +45,9 @@ function visualization_entity_charts_attach_libraries(&$element) {
     $element['#attached']['libraries_load'][] = array($library);
   }
   $module_path = drupal_get_path('module', 'visualization_entity_charts');
-  $element['#attached']['css'][] = $module_path . '/ve_chart.css';
-  drupal_add_js($module_path . '/visualization_entity_charts.js', array('weight' => 100));
+  $element['#attached']['css'][] = $module_path . '/css/ve_chart.css';
+  drupal_add_js($module_path . '/js/visualization_entity_charts_steps.js', array('weight' => 100));
+  drupal_add_js($module_path . '/js/visualization_entity_charts.js', array('weight' => 101));
 }
 
 /**
@@ -56,8 +57,8 @@ function visualization_entity_charts_entity_view($entity, $type, $view_mode, $la
   if ($type == 'visualization' && $entity->type == 've_chart') {
     $entity->content['#suffix'] = '<div id="graph"></div>';
     visualization_entity_charts_attach_libraries($entity->content);
-    $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/ve_chart.css';
-    drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/visualization_entity_charts_view.js', array('weight' => 100));
+    $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/css/ve_chart.css';
+    drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/js/visualization_entity_charts_view.js', array('weight' => 101));
   }
 }
 /**
@@ -127,6 +128,7 @@ function visualization_entity_charts_libraries_info() {
     'files' => array(
       'js' => array(
         'dist/recline.view.nvd3.min.js',
+        'dist/recline.view.nvd3.controls.min.js',
       ),
       'css' => array(
         'css/style.css',
