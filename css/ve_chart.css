@@ -67,6 +67,10 @@ svg {
   background-image: url('img/stackedbar.png');
 }
 
+#chart-selector .multiBarHorizontalChart {
+  background-image: url('img/horizontalbar.png');
+}
+
 #chart-selector .stackedAreaChart {
   background-image: url('img/stackedarea.png');
 }
