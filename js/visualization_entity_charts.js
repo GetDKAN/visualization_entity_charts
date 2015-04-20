@@ -28,6 +28,7 @@
           .done(function(){
             model.fetch().done(init);
             state.set('model', model);
+            state.get('model').queryState.attributes = state.get('queryState');
             sharedObject = {state: state};
           })
           .fail(function(){
