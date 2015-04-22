@@ -10,9 +10,22 @@
 #chart-with-controls .tab-content {
   overflow: hidden;
 }
+#iframe-shell h2 {
+  display: none;
+}
 #iframe-shell {
   overflow: hidden;
+  height: 100%;
 }
+
+body, html {
+  height: 100% !important;
+}
+
+.recline-nvd3 {
+  height: 100%;
+}
+
 svg {
   width: auto;
   height: auto;
