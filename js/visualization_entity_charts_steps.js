@@ -119,16 +119,19 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
         state: self.state
       });
 
+      // Pager widget
       self.pager = new recline.View.Pager({
         model: self.state.get('model'),
         state: self.state
       });
 
+      // Search wiget
       self.queryEditor = new recline.View.nvd3.QueryEditor({
         model: self.state.get('model').queryState,
         state: self.state
       });
 
+      // Filter widget
       self.filterEditor = new recline.View.nvd3.FilterEditor({
         model: self.state.get('model'),
         state: self.state
@@ -162,7 +165,6 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       self.$('.chosen-select').chosen({width: '95%'});
     },
     onEditorUpdate: function(){
-      console.log('onEditorUpdate');
       return false;
     },
     updateState: function(state, cb){
