@@ -11,6 +11,8 @@
       var currentState = $('#edit-field-ve-settings-und-0-value').val();
       var state;
       var model;
+
+      // There is not saved state. Neither database or memory.
       if(currentState && !sharedObject){
         state = new recline.Model.ObjectState(JSON.parse(currentState));
         model = state.get('model');
@@ -39,6 +41,7 @@
         }
       } else if(!sharedObject) {
         state = new recline.Model.ObjectState();
+        state.set('queryState', new recline.Model.Query());
         sharedObject = {state: state};
         init();
       }

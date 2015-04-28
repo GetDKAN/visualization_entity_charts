@@ -71,22 +71,22 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       self.options = _.defaults(options || {}, self.options);
       self.state = self.options.state;
       self.model = self.state.get('model');
-      if(self.model){
-        self.listenTo(self.model.queryState, 'change', self.copyQueryState);
-      }
+
       self.stepInfo = {
         title: 'Preview and Adjust',
         name: 'chartOptions'
       };
     },
     copyQueryState: function(){
+      console.log('copyQueryState');
       var self = this;
-      self.state.set('queryState', self.model.queryState.toJSON());
+      self.state.set('queryState', self.state.get('model').queryState.toJSON());
     },
     render: function(){
       var self = this;
       var graphType = self.state.get('graphType');
 
+      self.listenTo(self.state.get('model').queryState, 'change', self.copyQueryState);
       self.$el.html(Mustache.render(self.template, self.state.toJSON()));
       self.$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         self.graph.render();
