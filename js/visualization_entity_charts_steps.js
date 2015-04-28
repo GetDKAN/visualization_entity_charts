@@ -4,7 +4,7 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
 
 ;(function ($, my, global) {
   'use strict';
-  console.log(my);
+
   /**
    * Chart options step
    */
@@ -51,7 +51,7 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
                     '<div class="expansible" style="display:none" id="filter-editor"></div>' +
                   '</div>' +
                   '<div class="form-panel">' +
-                    '<h4 class="expander">Chart configuration<span>+</span></h4>' +
+                    '<h4 class="expander">Chart configuration<span>-</span></h4>' +
                     '<div class="expansible">' +
                       '<div id="base-controls"></div>' +
                       '<div id="extended-controls"></div>' +
@@ -93,8 +93,9 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       });
 
       self.$('.expander').on('click', function(){
+        var visible = self.$(this).next().is(':visible');
         var sp = self.$(this).find('span');
-        var sign = (sp.text() === '+')? '-' : '+' ;
+        var sign = (!visible) ? '-' : '+' ;
         sp.html(sign);
         self.$(this).next().slideToggle('fast');
       });
