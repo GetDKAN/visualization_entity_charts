@@ -94,7 +94,14 @@
             msv.render();
           }
         });
+        var $resourceField = $('#edit-field-uuid-resource-und-0-target-uuid');
 
+        $resourceField.on('autocompleteSelect', function(event, node) {
+          var re = /\[(.*?)\]/;
+          var $sourceField = $('#control-chart-source');
+          var uuid = re.exec($resourceField.val())[1];
+          $sourceField.val('/node/' + uuid + '/download');
+        });
         sharedObject.state.on('change', function(){
           $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
         });
