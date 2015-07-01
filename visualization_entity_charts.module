@@ -299,6 +299,6 @@ function visualization_entity_charts_visualization_entity_embed_render_alter($va
     drupal_add_css($module_path . '/css/ve_chart_embedded.css');
 
     // We need to override the default block content.
-    $vars['block']->content = '<div class="chart"><div class="chart-source">' . $visualization->field_ve_settings['und'][0]['value'] . '</div><div class="chart-container" style="height:' . $vars['height'] . 'px; width:' . $vars['width'] . 'px "></div>';
+    $vars['block']->content = '<div class="chart"><div class="chart-source">' . $visualization->field_ve_settings['und'][0]['value'] . '</div><div class="chart-container" style="height:' . $vars['height'] . 'px; width:' . $vars['width'] . 'px "></div></div>';
   }
 }
