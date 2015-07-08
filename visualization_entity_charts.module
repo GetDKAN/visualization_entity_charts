@@ -25,6 +25,7 @@ function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
 function visualization_entity_charts_attach_libraries(&$element) {
   $libraries = array(
     'lodash',
+    'chosen',
     'backbone',
     'recline',
     'd3',
@@ -171,39 +172,6 @@ function visualization_entity_charts_libraries_info() {
     ),
   );
 
-  $libraries['chosen'] = array(
-    'name' => 'chosen',
-    'vendor url' => 'https://github.com/harvesthq/chosen',
-    'download url' => 'https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip',
-    'version arguments' => array(
-      'file' => 'chosen.jquery.min.js',
-      'pattern' => '/Chosen v(\d+\.\d+\.\d+)/',
-    ),
-    'files' => array(
-      'js' => array(
-        'chosen.jquery.min.js',
-      ),
-      'css' => array(
-        'chosen.css',
-      ),
-    ),
-  );
-
-  $libraries['chosen_bootstrap'] = array(
-    'name' => 'chosen_bootstrap',
-    'vendor url' => 'https://github.com/dbtek/chosen-bootstrap',
-    'download url' => 'https://github.com/dbtek/chosen-bootstrap.git',
-    'version arguments' => array(
-      'file' => 'bower.json',
-      'pattern' => '/"version": "(\d+\.\d+\.\d+)"/',
-    ),
-    'files' => array(
-      'css' => array(
-        'chosen.bootstrap.min.css',
-      ),
-    ),
-  );
-
   $libraries['gdocs'] = array(
     'name' => 'gdocs',
     'vendor url' => 'https://github.com/okfn/recline.backend.gdocs',
@@ -240,12 +208,6 @@ function visualization_entity_charts_libraries_info_alter(&$libraries) {
     // This file breaks the javascript site.
     $index = array_search('vendor/timeline/js/timeline.js', $recline);
     unset($libraries['recline']['files']['js'][$index]);
-  }
-  // Removing chosen to use chosen bootstrap instead.
-  if(isset($libraries['chosen']['files']['css'])){
-    // $chosen = $libraries['chosen']['files']['css'];
-    // $index = array_search('chosen.css', $chosen);
-    // unset($libraries['chosen']['files']['css'][$index]);
   }
 }
 
