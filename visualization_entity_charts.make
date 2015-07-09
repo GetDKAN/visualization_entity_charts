@@ -33,15 +33,3 @@ libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git
 libraries[reclineViewNvd3][download][url] = "https://github.com/NuCivic/recline.view.nvd3.js.git"
 libraries[reclineViewNvd3][download][revision] = "3fd41696114206423c025de9fa655ffac5015d84"
-
-# CHOSEN
-libraries[chosen][type] = libraries
-libraries[chosen][download][type] = get
-libraries[chosen][download][url] = https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip
-libraries[chosen][destination] = libraries
-
-# CHOSEN BOOTSTRAP
-libraries[chosen_bootstrap][type] = libraries
-libraries[chosen_bootstrap][download][type] = git
-libraries[chosen_bootstrap][download][url] = https://github.com/dbtek/chosen-bootstrap.git
-libraries[chosen_bootstrap][destination] = libraries

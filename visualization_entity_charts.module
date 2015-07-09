@@ -35,10 +35,8 @@ function visualization_entity_charts_attach_libraries(&$element) {
     'csv',
     'mustache',
     'lodash_data',
-    'chosen',
     'moment',
     'slickgrid',
-    'chosen_bootstrap',
   );
 
   foreach ($libraries as $library) {
@@ -104,6 +102,24 @@ function visualization_entity_charts_libraries_info() {
       ),
       'css' => array(
         'nv.d3.min.css',
+      ),
+    ),
+  );
+
+  $libraries['chosen'] = array(
+    'name' => 'chosen',
+    'vendor url' => 'https://github.com/harvesthq/chosen',
+    'download url' => 'https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip',
+    'version arguments' => array(
+      'file' => 'chosen.jquery.min.js',
+      'pattern' => '/Chosen v(\d+\.\d+\.\d+)/',
+    ),
+    'files' => array(
+      'js' => array(
+        'chosen.jquery.min.js',
+      ),
+      'css' => array(
+        'chosen.css',
       ),
     ),
   );
