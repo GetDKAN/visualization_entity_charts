@@ -107,6 +107,16 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
         parent: self
       });
 
+      // Remove '$' and '%' signs from data
+      self.state.get('model').records.each(function(record) {
+        _.each(self.state.attributes.seriesFields, function(field) {
+          var fieldValue = record.get(field);
+          fieldValue = fieldValue.replace(/^\$/, '');
+          fieldValue = fieldValue.replace(/%$/, '');
+          record.set(field, fieldValue);
+        });
+      });
+
       // Controls available only for this graphType.
       self.extendedControls = new recline.View.nvd3[graphType + 'Controls']({
         model: self.state.get('model'),
