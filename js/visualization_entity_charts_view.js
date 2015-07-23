@@ -36,6 +36,17 @@
         var graph = null;
 
         dataset.fetch().done(function(dataset){
+
+          // Remove '$' and '%' signs from data
+          dataset.records.each(function(record) {
+            _.each(state.attributes.seriesFields, function(field) {
+              var fieldValue = record.get(field);
+              fieldValue = fieldValue.replace(/^\$/, '');
+              fieldValue = fieldValue.replace(/%$/, '');
+              record.set(field, fieldValue);
+            });
+          });
+
           dataset.queryState.set(state.get('queryState'));
           graph = new recline.View.nvd3[state.get('graphType')]({
             model: dataset,
