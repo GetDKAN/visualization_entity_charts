@@ -32,4 +32,7 @@ drush cc all
 ```
 
 ### Usage
-TO-DO
+
+Once the module is enabled, new chart entities can be created by going to /admin/structure/entity-type/visualization/ve_chart/add. A multi-step process will guide you through creation of a chart based on an uploaded data file.
+
+The bundle also includes an integration with the [Recline module](https://github.com/NuCivic/recline). If you have a content type with a recline file field, you can add a Recline Field Reference field to your chart bundle. This field type is defined in a module that comes bundled with [Visualization Entity](https://github.com/NuCivic/visualization_entity). The included DKAN integration module adds a Recline Field Reference pointing specifically at DKAN's Resource content type. In this case, entering an existing Resource node in the reference field will automatically populate the resource file into the chart entity's file field.
