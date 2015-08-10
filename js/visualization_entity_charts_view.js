@@ -38,20 +38,22 @@
         }
 
         var model = state.get('source');
-        model.url = cleanURL(model.url);
-        var dataset = new recline.Model.Dataset(model);
         var graph = null;
-
-        dataset.fetch().done(function(dataset){
-          dataset.queryState.set(state.get('queryState'));
+        model.url = cleanURL(model.url);
+        $.get(model.url).done(function(data){
+          data = data.replace(/(?:\r|\n)/g, '\r\n');
+          data = CSV.parse(data);
+          state.set('model', new recline.Model.Dataset({records: data}));
+          model = state.get('model');
+          model.queryState.set(state.get('queryState'));
           graph = new recline.View.nvd3[state.get('graphType')]({
-            model: dataset,
+            model: model,
             state: state,
             el: $el
           });
           graph.render();
-
         });
+        
       }
       function cleanURL(url){
         var haveProtocol = new RegExp('^(?:[a-z]+:)?//', 'i');
