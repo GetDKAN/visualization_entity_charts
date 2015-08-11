@@ -13,6 +13,12 @@
 #iframe-shell h2 {
   display: none;
 }
+h2.veTitle {
+  font-size: 18px;
+  margin-top: 0px; 
+  padding: 20px;
+  margin-bottom:0px;
+}
 #iframe-shell {
   overflow: hidden;
   height: 100%;
@@ -31,7 +37,9 @@ svg {
 #ve-chart-form .pane-content{
   overflow: auto;
 }
-
+#ve-chart-form .stages {
+  margin-top: 0;
+}
 #ve-chart-form .stages li {
   width: 25%;
 }

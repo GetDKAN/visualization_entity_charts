@@ -23,7 +23,7 @@
           $el = $('#iframe-shell');
           if(state.get('showTitle')){
             title = $el.find('h2 a').html();
-            $body.prepend('<h2 class="chartTitle">' + title + '</h2>');
+            $body.prepend('<h2 class="veTitle">' + title + '</h2>');
             height = getChartHeight(true);
             resize();
           } else {
@@ -64,9 +64,8 @@
       }
 
       function resize(){
-        var $title = $body.find('h2.chartTitle');
+        var $title = $body.find('h2.veTitle');
         var hasTitle = !!$title.length;
-        $title.css({marginTop:'0px', padding:'20px', marginBottom:'0px'});
         var height = getChartHeight(hasTitle);
         $('.recline-nvd3').height(height);
         $('#iframe-shell').height(height);
@@ -75,7 +74,7 @@
       function getChartHeight(hasTitle) {
         var height = (!hasTitle)
           ? $(window).height()
-          : $(window).height() - $body.find('h2.chartTitle').outerHeight(true);
+          : $(window).height() - $body.find('h2.veTitle').outerHeight(true);
 
         return height;
       }
