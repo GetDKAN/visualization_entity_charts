@@ -3,7 +3,7 @@
 	margin-left: 10px;
 }
 /* Move to dkan global stylesheet*/
-
+.entity-visualization h1,
 .field-name-field-ve-settings {
   display: none;
 }
@@ -37,9 +37,7 @@ svg {
 #ve-chart-form .pane-content{
   overflow: auto;
 }
-#ve-chart-form .stages {
-  margin-top: 0;
-}
+
 #ve-chart-form .stages li {
   width: 25%;
 }
