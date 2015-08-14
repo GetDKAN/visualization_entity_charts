@@ -41,7 +41,6 @@
         }
         else if(model && model.records) {
           jQuery(function(){
-            console.log('here i am');
             state.set('model', new recline.Model.Dataset(model));
             state.get('model').queryState.attributes = state.get('queryState');
             sharedObject = {state: state};

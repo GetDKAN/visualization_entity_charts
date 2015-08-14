@@ -78,7 +78,7 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       };
     },
     copyQueryState: function(){
-      console.log('copyQueryState');
+      // console.log('copyQueryState');
       var self = this;
       self.state.set('queryState', self.state.get('model').queryState.toJSON());
     },
