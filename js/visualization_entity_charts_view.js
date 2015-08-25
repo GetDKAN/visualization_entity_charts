@@ -13,7 +13,6 @@
       var height;
       var $body;
 
-
       if(state){
         state = new recline.Model.ObjectState(JSON.parse(state));
         $body = $(document.body);
