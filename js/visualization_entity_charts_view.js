@@ -13,6 +13,7 @@
       var height;
       var $body;
 
+
       if(state){
         state = new recline.Model.ObjectState(JSON.parse(state));
         $body = $(document.body);
@@ -37,6 +38,7 @@
           state.set('width', $('.field-name-field-ve-settings').width());
         }
 
+        $el.append('<p class="ve-loading">Loading…</p>');
         var model = state.get('source');
         var graph = null;
         model.url = cleanURL(model.url);
@@ -52,8 +54,9 @@
             el: $el
           });
           graph.render();
+          $('.ve-loading').remove();
         });
-        
+
       }
       function cleanURL(url){
         var haveProtocol = new RegExp('^(?:[a-z]+:)?//', 'i');
