@@ -15,7 +15,7 @@
 }
 h2.veTitle {
   font-size: 18px;
-  margin-top: 0px; 
+  margin-top: 0px;
   padding: 20px;
   margin-bottom:0px;
 }
@@ -174,4 +174,9 @@ svg {
 
 #chart-selector .linePlusBarChart {
   background-image: url('img/lineplusbar.png');
+}
+
+/* Throbber element */
+.ve-loading {
+	text-align: center;
 }
