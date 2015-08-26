@@ -37,7 +37,7 @@
           state.set('width', $('.field-name-field-ve-settings').width());
         }
 
-        $el.append('<p class="ve-loading">Loading…</p>');
+        $el.append('<p id="ve-loading">Loading…</p>');
         var model = state.get('source');
         var graph = null;
         model.url = cleanURL(model.url);
@@ -53,7 +53,7 @@
             el: $el
           });
           graph.render();
-          $('.ve-loading').remove();
+          $('#ve-loading').remove();
         });
 
       }
