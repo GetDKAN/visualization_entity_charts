@@ -1,7 +1,7 @@
 name = Visualization Entity Charts DKAN
 description = Add charts to dkan
 core = 7.x
-package = Other
+package = DKAN
 dependencies[] = dkan_dataset
 dependencies[] = dkan_datastore
 dependencies[] = features

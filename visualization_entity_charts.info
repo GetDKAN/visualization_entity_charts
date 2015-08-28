@@ -1,7 +1,7 @@
 name = Visualization Entity Charts
 description = Create charts using nvd3
 core = 7.x
-package = Other
+package = DKAN
 dependencies[] = chosen
 dependencies[] = eck
 dependencies[] = features
