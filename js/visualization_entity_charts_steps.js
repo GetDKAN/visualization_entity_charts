@@ -355,11 +355,16 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
         backend: backend,
         url: url
       };
-      
+
       state.set('source', source);
       $.get(url).done(function(data){
         data = data.replace(/(?:\r|\n)/g, '\r\n');
         data = CSV.parse(data);
+        data = _.map(data, function(record){
+          return _.map(record, function(value){
+            return !value ? null : value;
+          });
+        });
         state.set('model', new recline.Model.Dataset({records: data}));
         cb(state);
       });

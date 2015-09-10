@@ -47,7 +47,7 @@
             init();
           });
         }
-      } 
+      }
       else if(!sharedObject) {
         state = new recline.Model.ObjectState();
         state.set('queryState', new recline.Model.Query());
