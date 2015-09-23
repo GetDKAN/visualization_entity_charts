@@ -44,23 +44,19 @@
         $.get(model.url).done(function(data){
           data = data.replace(/(?:\r|\n)/g, '\r\n');
           data = CSV.parse(data);
-          data = _.map(data, function(record){
-            return _.map(record, function(value){
-              return !value ? null : value;
-            });
-          });
           state.set('model', new recline.Model.Dataset({records: data}));
           model = state.get('model');
           model.queryState.set(state.get('queryState'));
-          graph = new recline.View.nvd3[state.get('graphType')]({
-            model: model,
-            state: state,
-            el: $el
+          model.fetch().done(function(){
+            graph = new recline.View.nvd3[state.get('graphType')]({
+              model: model,
+              state: state,
+              el: $el
+            });
+            graph.render();
+            $el.find('.loader').remove();
           });
-          graph.render();
-          $el.find('.loader').remove();
         });
-
       }
       function cleanURL(url){
         var haveProtocol = new RegExp('^(?:[a-z]+:)?//', 'i');

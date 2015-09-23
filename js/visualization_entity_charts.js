@@ -41,10 +41,13 @@
         }
         else if(model && model.records) {
           jQuery(function(){
-            state.set('model', new recline.Model.Dataset(model));
-            state.get('model').queryState.attributes = state.get('queryState');
-            sharedObject = {state: state};
-            init();
+            model = new recline.Model.Dataset(model);
+            model.fetch().done(function(){
+              state.set('model', model);
+              state.get('model').queryState.attributes = state.get('queryState');
+              sharedObject = {state: state};
+              init();
+            });
           });
         }
       }
