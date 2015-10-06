@@ -1,6 +1,6 @@
 /* Move to dkan global stylesheet*/
 .file-widget input.btn {
-	margin-left: 10px;
+  margin-left: 10px;
 }
 /* Move to dkan global stylesheet*/
 .entity-visualization h1,
@@ -19,13 +19,18 @@ h2.veTitle {
   padding: 20px;
   margin-bottom:0px;
 }
-#iframe-shell {
+
+.page-visualization-ve-chart-iframe {
   overflow: hidden;
-  height: 100%;
 }
 
-body, html {
-  height: 100% !important;
+#iframe-shell .col-md-12{
+  margin: 0;
+  padding: 0;
+}
+
+#iframe-shell .row {
+  margin: 0px !important;
 }
 
 svg {
@@ -180,6 +185,9 @@ svg {
   min-height: 200px;
 }
 
+/**
+ * Loader
+ */
 .page-visualization .loader {
   position: absolute;
   width: 200px;
