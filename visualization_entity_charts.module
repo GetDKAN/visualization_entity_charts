@@ -55,7 +55,7 @@ function visualization_entity_charts_attach_libraries(&$element) {
  */
 function visualization_entity_charts_entity_view($entity, $type, $view_mode, $langcode) {
   if ($type == 'visualization' && $entity->type == 've_chart') {
-    $entity->content['#suffix'] = '<div id="graph"></div>';
+    $entity->content['#suffix'] = '<div class="graph" data-id="' . $entity->id . '" id="graph-' . $entity->id . '"></div>';
     visualization_entity_charts_attach_libraries($entity->content);
     $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/css/ve_chart.css';
     drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/js/visualization_entity_charts_view.js', array('weight' => 101));
@@ -266,9 +266,11 @@ function visualization_entity_load_required_libraries(){
  * Implements hook_charts_visualization_entity_embed_render_alter().
  */
 function visualization_entity_charts_visualization_entity_embed_render_alter($vars) {
+  var_dump('wtf');
   $visualization = $vars['visualization'];
+  dpm($vars);
 
-  if (!empty($visualization) && $visualization->type === 've_chart' && $vars['conf']['local_source']) {
+  if (!empty($visualization) && $visualization->type === 've_chart') {
 
     // Load required libraries.
     visualization_entity_load_required_libraries();
