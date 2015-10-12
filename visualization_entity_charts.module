@@ -266,9 +266,7 @@ function visualization_entity_load_required_libraries(){
  * Implements hook_charts_visualization_entity_embed_render_alter().
  */
 function visualization_entity_charts_visualization_entity_embed_render_alter($vars) {
-  var_dump('wtf');
   $visualization = $vars['visualization'];
-  dpm($vars);
 
   if (!empty($visualization) && $visualization->type === 've_chart') {
 
