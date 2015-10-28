@@ -42,7 +42,7 @@
         model.url = cleanURL(model.url);
         $.get(model.url).done(function(data){
           data = data.replace(/(?:\r|\n)/g, '\r\n');
-          data = CSV.parse(data);
+          data = model.backend == 'csv' ? CSV.parse(data) : CSVT.parse(data, {'transpose': true, 'missingHeader': model.missingHeader});
           state.set('model', new recline.Model.Dataset({records: data}));
           model = state.get('model');
           model.queryState.set(state.get('queryState'));

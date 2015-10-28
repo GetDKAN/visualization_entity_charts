@@ -78,7 +78,6 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       };
     },
     copyQueryState: function(){
-      console.log('copyQueryState');
       var self = this;
       self.state.set('queryState', self.state.get('model').queryState.toJSON());
     },
@@ -321,18 +320,21 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
   global.LoadDataView = Backbone.View.extend({
     template: '<div class="form-group">' +
                 '<label for="control-chart-source">Source</label>' +
-                '<input value="{{source.url}}" type="text" id="control-chart-source" class="form-control" />' +
+                '<input value="{{url}}" type="text" id="control-chart-source" class="form-control" />' +
               '</div>' +
               '<div class="form-group">' +
                 '<select id="control-chart-backend" class="form-control">' +
-                  '<option value="csv">CSV</option>' +
-                  '<option value="gdocs">Google Spreadsheet</option>' +
-                  '<option value="ckan">DataProxy</option>' +
+                  '{{{options}}}' +
                 '</select>' +
+              '</div>' +
+              '<div class="form-group hidden">' +
+                '<label for="missingHeader">Missing Header</label>' +
+                '<input class="form-control" id="missingHeader" value="{{missingHeader}}">'+
               '</div>' +
               '<div id="controls">' +
                 '<div id="next" class="btn btn-primary pull-right">Next</div>' +
               '</div>',
+    option_template: '<option value="{{key}}">{{value}}</option>',
     initialize: function(options){
       var self = this;
       self.options = _.defaults(options || {}, self.options);
@@ -345,22 +347,56 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
     },
     render: function(){
       var self = this;
-      self.$el.html(Mustache.render(self.template, self.state.toJSON()));
+      var json_state = self.state.toJSON()
+      if (json_state.source) {
+        var vars = {
+          'url': json_state.source.url,
+          'options': function() {
+            var options = '';
+            var backends = {
+              'csv': 'CSV',
+              'csv-t': 'CSV Transpose',
+              'gdocs': 'Google Spreadsheet',
+              'ckan': 'DataProxy',
+            }
+            $.each(backends, function(k, v){
+              options += Mustache.render(self.option_template, {'key': k, 'value': v});
+            });
+            return options;
+          },
+          'missingHeader': json_state.source.missingHeader ? json_state.source.missingHeader : 'Name',
+        }
+        self.$el.html(Mustache.render(self.template, vars));
+        $('#control-chart-backend').change(function() {
+          var parent = $('#missingHeader').parent();
+          $(this).val() == 'csv-t' ? parent.removeClass('hidden') : parent.addClass('hidden');
+        });
+        var active = json_state.source.backend;
+        $('#control-chart-backend').val(active);
+        $('#control-chart-backend').change();
+      }
     },
     updateState: function(state, cb){
       var self = this;
       var url = self.$('#control-chart-source').val();
       var backend = self.$('#control-chart-backend').val();
+      var missingHeader = self.$('#missingHeader').val();
       var source = {
         backend: backend,
-        url: url
+        url: url,
+        missingHeader: missingHeader,
       };
       
       state.set('source', source);
       $.get(url).done(function(data){
-        data = data.replace(/(?:\r|\n)/g, '\r\n');
-        data = CSV.parse(data);
-        state.set('model', new recline.Model.Dataset({records: data}));
+        switch (backend) {
+          case 'csv':
+          case 'csv-t':
+            data = data.replace(/(?:\r|\n)/g, '\r\n');
+            data = backend == 'csv' ? CSV.parse(data) : CSVT.parse(data, {'transpose': true, 'missingHeader': missingHeader});
+            state.set('model', new recline.Model.Dataset({records: data}));
+            break;
+        }
         cb(state);
       });
     }

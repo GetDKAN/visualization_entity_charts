@@ -24,19 +24,19 @@ function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
  */
 function visualization_entity_charts_attach_libraries(&$element) {
   $libraries = array(
-    'lodash',
     'chosen',
+    'lodash',
     'backbone',
     'recline',
     'd3',
     'nvd3',
-    'reclineViewNvd3',
     'gdocs',
     'csv',
     'mustache',
     'lodash_data',
     'moment',
     'slickgrid',
+    'reclineViewNvd3',
   );
 
   foreach ($libraries as $library) {
@@ -151,6 +151,7 @@ function visualization_entity_charts_libraries_info() {
       'js' => array(
         'dist/recline.view.nvd3.min.js',
         'dist/recline.view.nvd3.controls.min.js',
+        'dist/recline.backends.min.js',
       ),
       'css' => array(
         'css/style.css',
