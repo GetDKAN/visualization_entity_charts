@@ -42,7 +42,6 @@
         var graph = null;
         model.url = cleanURL(model.url);
         $.get(model.url).done(function(data){
-          data = data.replace(/(?:\r|\n)/g, '\r\n');
           data = CSV.parse(data);
           state.set('model', new recline.Model.Dataset({records: data}));
           model = state.get('model');

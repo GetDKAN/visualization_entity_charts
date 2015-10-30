@@ -57,7 +57,6 @@
         sharedObject = {state: state};
         init();
       }
-
       if(state) {
         setActiveStep(state.get('step'));
       } else {
