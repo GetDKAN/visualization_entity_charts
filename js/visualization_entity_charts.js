@@ -58,6 +58,10 @@
         init();
       }
       if(state) {
+        // Hide existing resource field on all but step 1
+        if (state.attributes.step > 0) {
+          $("#field-uuid-resource-add-more-wrapper").hide();
+        }
         setActiveStep(state.get('step'));
       } else {
         setActiveStep(0);
@@ -92,6 +96,13 @@
 
         msv.on('multistep:change', function(e){
           setActiveStep(e.step);
+          // Hide existing resource field on all but step 1 (see line 61)
+          if (e.step > 0) {
+            $("#field-uuid-resource-add-more-wrapper").hide();
+          }
+          else {
+            $("#field-uuid-resource-add-more-wrapper").show();
+          }
         });
         msv.render();
 
