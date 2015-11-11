@@ -23,7 +23,7 @@
           $el = $('#iframe-shell');
           if(state.get('showTitle')){
             title = $el.find('h2 a').html();
-            $body.prepend('<h2 class="chartTitle">' + title + '</h2>');
+            $body.prepend('<h2 class="veTitle">' + title + '</h2>');
             height = getChartHeight(true);
             resize();
           } else {
@@ -37,23 +37,25 @@
           state.set('width', $('.field-name-field-ve-settings').width());
         }
 
+        $el.append(('<div class="alert alert-info loader">Loading <span class="spin"></span></div>'));
         var model = state.get('source');
         var graph = null;
         model.url = cleanURL(model.url);
         $.get(model.url).done(function(data){
-          data = data.replace(/(?:\r|\n)/g, '\r\n');
           data = CSV.parse(data);
           state.set('model', new recline.Model.Dataset({records: data}));
           model = state.get('model');
           model.queryState.set(state.get('queryState'));
-          graph = new recline.View.nvd3[state.get('graphType')]({
-            model: model,
-            state: state,
-            el: $el
+          model.fetch().done(function(){
+            graph = new recline.View.nvd3[state.get('graphType')]({
+              model: model,
+              state: state,
+              el: $el
+            });
+            graph.render();
+            $el.find('.loader').remove();
           });
-          graph.render();
         });
-        
       }
       function cleanURL(url){
         var haveProtocol = new RegExp('^(?:[a-z]+:)?//', 'i');
@@ -64,9 +66,8 @@
       }
 
       function resize(){
-        var $title = $body.find('h2.chartTitle');
+        var $title = $body.find('h2.veTitle');
         var hasTitle = !!$title.length;
-        $title.css({marginTop:'0px', padding:'20px', marginBottom:'0px'});
         var height = getChartHeight(hasTitle);
         $('.recline-nvd3').height(height);
         $('#iframe-shell').height(height);
@@ -75,7 +76,7 @@
       function getChartHeight(hasTitle) {
         var height = (!hasTitle)
           ? $(window).height()
-          : $(window).height() - $body.find('h2.chartTitle').outerHeight(true);
+          : $(window).height() - $body.find('h2.veTitle').outerHeight(true);
 
         return height;
       }

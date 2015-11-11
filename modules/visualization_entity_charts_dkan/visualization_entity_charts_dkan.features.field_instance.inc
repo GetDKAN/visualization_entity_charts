@@ -15,7 +15,7 @@ function visualization_entity_charts_dkan_field_default_field_instances() {
     'bundle' => 've_chart',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Start typing the title of the resource you would like to use and select it from the list.',
     'display' => array(
       'default' => array(
         'label' => 'above',
