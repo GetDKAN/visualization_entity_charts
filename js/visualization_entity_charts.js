@@ -107,19 +107,18 @@
         });
         var $resourceField = $('#edit-field-uuid-resource-und-0-target-uuid');
 
-        $resourceField.focus('autocompleteSelect', function(event, node) {
-          msv.gotoStep(0);
-          msv.render();
-          setActiveStep(0);
-        });
-
-        $resourceField.blur('autocompleteSelect', function(event, node) {
+        $resourceField.on('autocompleteSelect', function(event, node) {
           var re = /\[(.*?)\]/;
           var $sourceField = $('#control-chart-source');
           var uuid = re.exec($resourceField.val())[1];
-          $sourceField.val('/node/' + uuid + '/download');  
+          var url = '/node/' + uuid + '/download';
+          var source = {backend:'csv', url: url};
+          sharedObject.state.set('source', source);
+          $sourceField.val(url);
+          msv.gotoStep(0);
+          msv.render();
         });
-        
+
         sharedObject.state.on('change', function(){
           $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
         });
