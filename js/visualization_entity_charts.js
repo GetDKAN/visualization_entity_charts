@@ -12,43 +12,24 @@
       var state;
       var model;
 
-      // There is not saved state. Neither database or memory.
-      if(currentState && !sharedObject){
-
+      if(currentState){
         state = new recline.Model.ObjectState(JSON.parse(currentState));
-        model = state.get('model');
-        if(model && !model.records){
-          // Ensure url is protocol agnostic
-          model = state.get('model');
-          model.url = cleanURL(model.url);
-          model = new recline.Model.Dataset(model);
-
-          // Hack: check if the file exists before fetch.
-          // CSV.JS does not return an ajax promise then
-          // we can't know if the request fails.
-          $.get(state.get('model').url)
-          .done(function(){
-            model.fetch().done(init);
-            state.set('model', model);
-            state.get('model').queryState.attributes = state.get('queryState');
-            sharedObject = {state: state};
-          })
+        source = state.get('source');
+        if(source){
+          source.url = cleanURL(source.url);
+          model = new recline.Model.Dataset(source);
+          model.fetch(source)
+          .done(init)
           .fail(function(){
+            alert('An error occured trying to get the file');
             sharedObject = {state: state};
             sharedObject.state.set({step:0});
             init();
           });
-        }
-        else if(model && model.records) {
-          jQuery(function(){
-            model = new recline.Model.Dataset(model);
-            model.fetch().done(function(){
-              state.set('model', model);
-              state.get('model').queryState.attributes = state.get('queryState');
-              sharedObject = {state: state};
-              init();
-            });
-          });
+
+          state.set('model', model);
+          state.get('model').queryState.attributes = state.get('queryState');
+          sharedObject = {state: state};
         }
       }
       else if(!sharedObject) {
@@ -57,6 +38,7 @@
         sharedObject = {state: state};
         init();
       }
+
       if(state) {
         setActiveStep(state.get('step'));
       } else {
@@ -85,6 +67,7 @@
           el: $('#steps')
         });
 
+        // Add steps
         msv.addStep(new LoadDataView(sharedObject));
         msv.addStep(new DataOptionsView(sharedObject));
         msv.addStep(new ChooseChartView(sharedObject));
@@ -120,7 +103,9 @@
         });
 
         sharedObject.state.on('change', function(){
-          $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
+          var serializedState = JSON.stringify(sharedObject.state.toJSON());
+          $('#edit-field-ve-settings-und-0-value').val(serializedState);
+          console.log(serializedState);
         });
         window.msv = msv;
         window.sharedObject = sharedObject;

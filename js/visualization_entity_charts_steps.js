@@ -355,14 +355,14 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
         backend: backend,
         url: url
       };
+      var model;
 
       state.set('source', source);
-      $.get(url).done(function(data){
-        //data = data.replace(/(?:\r|\n)/g, '\r\n');
-        data = CSV.parse(data);
-        state.set('model', new recline.Model.Dataset({records: data}));
+      model = new recline.Model.Dataset(source);
+      model.fetch().done(function(){
         cb(state);
       });
+      state.set('model', model);
     }
   });
 
