@@ -63,8 +63,9 @@
       }
 
       function resize(){
-        var $title = $body.find('h2.veTitle');
+        var $title = $body.find('h2.chartTitle');
         var hasTitle = !!$title.length;
+        $title.css({marginTop:'0px', padding:'20px', marginBottom:'0px'});
         var height = getChartHeight(hasTitle);
         $('.recline-nvd3').height(height);
         $('#iframe-shell').height(height);
@@ -73,7 +74,7 @@
       function getChartHeight(hasTitle) {
         var height = (!hasTitle)
           ? $(window).height()
-          : $(window).height() - $body.find('h2.veTitle').outerHeight(true);
+          : $(window).height() - $body.find('h2.chartTitle').outerHeight(true);
 
         return height;
       }

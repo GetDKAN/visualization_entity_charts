@@ -78,11 +78,11 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       };
     },
     copyQueryState: function(){
-      // console.log('copyQueryState');
       var self = this;
       self.state.set('queryState', self.state.get('model').queryState.toJSON());
     },
     render: function(){
+      console.log('Render::ChartOptionsView');
       var self = this;
       var graphType = self.state.get('graphType');
 
@@ -114,6 +114,9 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       });
 
       // Chart itself.
+      if(self.graph) {
+        self.graph.destroy();
+      }
       self.graph = new recline.View.nvd3[graphType]({
         model: self.state.get('model'),
         state: self.state
@@ -225,6 +228,7 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       return self.$('li.selected').data('selected');
     },
     render: function(){
+      console.log('Render::ChooseChartView');
       var self = this;
       var graphTypes = ['discreteBarChart', 'multiBarChart', 'multiBarHorizontalChart', 'stackedAreaChart', 'pieChart',
         'lineChart', 'lineWithFocusChart', 'scatterChart', 'linePlusBarChart'
@@ -239,7 +243,7 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
     updateState: function(state, cb){
       var self = this;
       var type = self.getSelected();
-      state.set('graphType', type);
+      state.set('graphType', type, {silent: true});
       cb(state);
     }
   });
@@ -290,6 +294,7 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       };
     },
     render: function(){
+      console.log('Render::DataOptionsView');
       var self = this;
       var dataTypes = ['Number', 'String', 'Date', 'Auto'];
 
@@ -321,19 +326,59 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
   global.LoadDataView = Backbone.View.extend({
     template: '<div class="form-group">' +
                 '<label for="control-chart-source">Source</label>' +
-                '<input value="{{source.url}}" type="text" id="control-chart-source" class="form-control" />' +
+                '<input value="{{url}}" type="text" id="control-chart-source" class="form-control" />' +
               '</div>' +
               '<div class="form-group">' +
                 '<select id="control-chart-backend" class="form-control">' +
-                  '<option value="csv">CSV</option>' +
-                  '<option value="gdocs">Google Spreadsheet</option>' +
-                  '<option value="ckan">DataProxy</option>' +
+                  '{{{options}}}' +
                 '</select>' +
               '</div>' +
+
+              '<div class="backend-settings settings-csvt hidden">' +
+
+                // DELIMITER
+                '<div class="form-group">' +
+                  '<label for="delimiter">Delimiter</label>' +
+                  '<input class="form-control" id="delimiter" value="{{delimiter}}">'+
+                '</div>' +
+
+                // LINE TERMINATOR
+                '<div class="form-group">' +
+                  '<label for="lineTerminator">Line Terminator</label>' +
+                  '<input class="form-control" id="lineTerminator" value="{{lineTerminator}}">'+
+                '</div>' +
+
+                // DOUBLE QUOTE
+                '<div class="form-group">' +
+                  '<label>' +
+                    '<input type="checkbox" id="doubleQuote" {{#doubleQuote}}checked {{/doubleQuote}}> Double Quote'+
+                  '</label>' +
+                '</div>' +
+
+                // TRANSPOSE
+                '<div class="form-group">' +
+                  '<label>' +
+                    '<input type="checkbox" id="transpose" {{#transpose}}checked {{/transpose}}> Transpose'+
+                  '</label>' +
+                '</div>' +
+
+                // MISSING HEADER
+                '<div class="form-group hidden">' +
+                  '<label for="missingHeader">Missing Header</label>' +
+                  '<input class="form-control" id="missingHeader" value="{{missingHeader}}">'+
+                '</div>' +
+              '</div>' +
+
               '<div id="controls">' +
                 '<div id="next" class="btn btn-primary pull-right">Next</div>' +
               '</div>',
+    option_template: '<option value="{{key}}">{{value}}</option>',
+    events:{
+      'change #control-chart-backend': 'showSettings',
+      'change #transpose': 'showMissingHeader',
+    },
     initialize: function(options){
+      console.log('Render::LoadDataView');
       var self = this;
       self.options = _.defaults(options || {}, self.options);
       self.state = self.options.state;
@@ -343,26 +388,91 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
         name: 'loadData'
       };
     },
-    render: function(){
+    showSettings: function(e){
+      var backend = (e.target) ? e.target.value : e;
       var self = this;
-      self.$el.html(Mustache.render(self.template, self.state.toJSON()));
+      var source = self.state.get('source') || {};
+      var selector = '.settings-' + backend;
+      $('.backend-settings').addClass('hidden');
+      $(selector).removeClass('hidden');
+      source.backend = backend;
+      self.state.set('source', source, {silent: true});
+    },
+    showMissingHeader: function() {
+      var self = this;
+      var parent = self.$('#missingHeader').parent();
+      var source = self.state.get('source') || {};
+
+      if(self.$('#transpose').is(':checked')) {
+        source.transpose = true;
+        parent.removeClass('hidden');
+      } else {
+        source.transpose = false;
+        parent.addClass('hidden');
+      }
+      self.state.set('source', source, {silent: true});
+    },
+    render: function(){
+      console.log('Render::LoadDataView');
+      var self = this;
+      var json_state = self.state.toJSON();
+      var source = json_state.source || {};
+      var vars = {
+        'url': source.url,
+        'options': function() {
+          var options = '';
+          var backends = {
+            'csvt': 'CSV',
+            'gdocs': 'Google Spreadsheet',
+            'dataproxy': 'DataProxy',
+          }
+          $.each(backends, function(k, v){
+            options += Mustache.render(self.option_template, {'key': k, 'value': v});
+          });
+          return options;
+        },
+        'missingHeader': source.missingHeader ? source.missingHeader : 'Name',
+        'delimiter': source.delimiter ? source.delimiter : ',',
+        'lineTerminator': source.lineTerminator ? source.lineTerminator : '\\n',
+        'doubleQuote': source.doubleQuote ? source.doubleQuote : false,
+        'transpose': source.transpose ? source.transpose : false,
+      }
+      self.$el.html(Mustache.render(self.template, vars));
+      var active = (source.backend) ? (source.backend === 'csv') ? 'csvt' : source.backend : 'csvt';
+      self.showSettings(active);
+      self.showMissingHeader();
     },
     updateState: function(state, cb){
       var self = this;
       var url = self.$('#control-chart-source').val();
       var backend = self.$('#control-chart-backend').val();
+      var missingHeader = self.$('#missingHeader').val();
+      var transpose = self.$('#transpose').is(':checked');
+      var doubleQuote = self.$('#doubleQuote').is(':checked');
+      var delimiter = self.$('#delimiter').val();
+      var lineTerminator = self.$('#lineTerminator').val();
+
+      // Convert user visible chars to their corresponding new line char
+      lineTerminator = lineTerminator.replace(/\\n/g, '\u000A');
+      lineTerminator = lineTerminator.replace(/\\r/g, '\u000D)');
+
       var source = {
         backend: backend,
-        url: url
+        url: url,
+        missingHeader: missingHeader,
+        transpose: transpose,
+        doubleQuote: doubleQuote,
+        delimiter: delimiter,
+        lineTerminator: lineTerminator,
       };
       var model;
 
-      state.set('source', source);
+      state.set('source', source, {silent: true});
       model = new recline.Model.Dataset(source);
       model.fetch().done(function(){
         cb(state);
       });
-      state.set('model', model);
+      state.set('model', model, {silent: true});
     }
   });
 

@@ -105,7 +105,7 @@
         sharedObject.state.on('change', function(){
           var serializedState = JSON.stringify(sharedObject.state.toJSON());
           $('#edit-field-ve-settings-und-0-value').val(serializedState);
-          console.log(serializedState);
+          //console.log(sharedObject.state.toJSON());
         });
         window.msv = msv;
         window.sharedObject = sharedObject;
