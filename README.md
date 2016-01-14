@@ -49,7 +49,6 @@ Choose a single *x-field* and one or more *y-fields* for the visualization.
 
 #### Step Four - Preview and Adjust
 ##### Query Editor
-????
 
 ##### Filter Editor
 ###### Add Filter
@@ -72,17 +71,17 @@ Multiple filters can be applied to data.
 * **Color**: Set the color the chart is drawn in. Use either a [HEX color code](http://www.w3schools.com/tags/ref_colorpicker.asp) or a [valid css color name ](http://www.w3schools.com/cssref/css_colornames.asp)
 * **Transition Time**: Time in ms it takes for graph to animate.
 * Goal
-**From** - ????
-**To** - ????
-**Label Outside** - ????
-**Show Label** - ????
+**From** - 
+**To** - 
+**Label Outside** - 
+**Show Label** - 
 * **Margin** - Enter value of margin in the order: *top, right, bottom, left*
 * **Show Title**
 * **Show Controls**
 * **Show Legend**
 * **Group By X Field** - For multiple series values Y will show values grouped by X
 * **Show Tooltips** - Shows data and label on hover
-* **Reduce Ticks** - ????
+* **Reduce Ticks** - 
 
 ### Recline
 The bundle also includes an integration with the [Recline module](https://github.com/NuCivic/recline). If you have a content type with a recline file field, you can add a Recline Field Reference field to your chart bundle. This field type is defined in a module that comes bundled with [Visualization Entity](https://github.com/NuCivic/visualization_entity). The included DKAN integration module adds a Recline Field Reference pointing specifically at DKAN's Resource content type. In this case, entering an existing Resource node in the reference field will automatically populate the resource file into the chart entity's file field.
