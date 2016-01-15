@@ -56,6 +56,7 @@ Choose a single *x-field* and one or more *y-fields* for the visualization.
 Multiple filters can be applied to data.
 
 ##### Chart Configuration
+**NOTE**:X and Y Axis Fields are not supported by chart type *Pie Chart*
 ###### X Axis
 * **Format** Select an appropriate format for the X Axis labels.
 * **Axis Label**  will provide a custom label for the x axis. **Note:** Axis labels do not display for Pie Charts.
