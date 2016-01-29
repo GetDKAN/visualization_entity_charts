@@ -38,4 +38,4 @@ libraries[spectrum][download][revision] = "98454b55521cfb495f628db28af01100c029e
 libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git
 libraries[reclineViewNvd3][download][url] = "https://github.com/NuCivic/recline.view.nvd3.js.git"
-libraries[reclineViewNvd3][download][revision] = "e20af6f5275b709b20da5f599870a28335394bce"
+libraries[reclineViewNvd3][download][revision] = "ef676a012c886c90149245c367c642d82163302c"
