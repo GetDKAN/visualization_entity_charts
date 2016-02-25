@@ -24,19 +24,19 @@ function visualization_entity_charts_form_alter(&$form, $form_state, $form_id) {
  */
 function visualization_entity_charts_attach_libraries(&$element) {
   $libraries = array(
-    'lodash',
     'chosen',
+    'lodash',
     'backbone',
     'recline',
     'd3',
     'nvd3',
-    'reclineViewNvd3',
     'gdocs',
     'csv',
     'mustache',
     'lodash_data',
     'moment',
     'slickgrid',
+    'reclineViewNvd3',
   );
 
   foreach ($libraries as $library) {
@@ -55,10 +55,14 @@ function visualization_entity_charts_attach_libraries(&$element) {
  */
 function visualization_entity_charts_entity_view($entity, $type, $view_mode, $langcode) {
   if ($type == 'visualization' && $entity->type == 've_chart') {
-    $entity->content['#suffix'] = '<div id="graph"></div>';
-    visualization_entity_charts_attach_libraries($entity->content);
-    $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/css/ve_chart.css';
-    drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/js/visualization_entity_charts_view.js', array('weight' => 101));
+    if(visualization_entity_resource_accesible($entity, 'field_uuid_resource')){
+      $entity->content['#suffix'] = '<div id="graph"></div>';
+      visualization_entity_charts_attach_libraries($entity->content);
+      $entity->content['#attached']['css'][] = drupal_get_path('module', 'visualization_entity_charts') . '/css/ve_chart.css';
+      drupal_add_js(drupal_get_path('module', 'visualization_entity_charts') . '/js/visualization_entity_charts_view.js', array('weight' => 101));
+    } else {
+      drupal_access_denied();
+    }
   }
 }
 
@@ -151,6 +155,7 @@ function visualization_entity_charts_libraries_info() {
       'js' => array(
         'dist/recline.view.nvd3.min.js',
         'dist/recline.view.nvd3.controls.min.js',
+        'dist/recline.backends.min.js',
       ),
       'css' => array(
         'css/style.css',

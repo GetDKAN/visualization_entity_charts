@@ -23,7 +23,7 @@
           $el = $('#iframe-shell');
           if(state.get('showTitle')){
             title = $el.find('h2 a').html();
-            $body.prepend('<h2 class="chartTitle">' + title + '</h2>');
+            $body.prepend('<h2 class="veTitle">' + title + '</h2>');
             height = getChartHeight(true);
             resize();
           } else {
@@ -37,23 +37,22 @@
           state.set('width', $('.field-name-field-ve-settings').width());
         }
 
-        var model = state.get('source');
+        $el.append(('<div class="alert alert-info loader">Loading <span class="spin"></span></div>'));
+        var source = state.get('source');
         var graph = null;
-        model.url = cleanURL(model.url);
-        $.get(model.url).done(function(data){
-          data = data.replace(/(?:\r|\n)/g, '\r\n');
-          data = CSV.parse(data);
-          state.set('model', new recline.Model.Dataset({records: data}));
-          model = state.get('model');
-          model.queryState.set(state.get('queryState'));
+        source.url = cleanURL(source.url);
+        model = new recline.Model.Dataset(source);
+        model.fetch().done(function(data){
           graph = new recline.View.nvd3[state.get('graphType')]({
             model: model,
             state: state,
             el: $el
           });
           graph.render();
+          $el.find('.loader').remove();
         });
-        
+        model.queryState.set(state.get('queryState'));
+        state.set('model', model);
       }
       function cleanURL(url){
         var haveProtocol = new RegExp('^(?:[a-z]+:)?//', 'i');
