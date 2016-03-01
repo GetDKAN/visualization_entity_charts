@@ -38,4 +38,4 @@ libraries[spectrum][download][revision] = "98454b55521cfb495f628db28af01100c029e
 libraries[reclineViewNvd3][type] = libraries
 libraries[reclineViewNvd3][download][type] = git
 libraries[reclineViewNvd3][download][url] = "https://github.com/NuCivic/recline.view.nvd3.js.git"
-libraries[reclineViewNvd3][download][branch] = master
+libraries[reclineViewNvd3][download][branch] = 1206-add-from-to-fields
