@@ -32,7 +32,7 @@ libraries[lodash_data][download][revision] = "0dbe0701003b8a45037ab5fada630db2db
 libraries[spectrum][type] = libraries
 libraries[spectrum][download][type] = git
 libraries[spectrum][download][url] = "https://github.com/bgrins/spectrum.git"
-libraries[spectrum][download][revision] = "98454b55521cfb495f628db28af01100c029ef76"
+libraries[spectrum][download][revision] = master
 
 # RECLINE NVD3 VIEW
 libraries[reclineViewNvd3][type] = libraries
