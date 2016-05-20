@@ -359,7 +359,10 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
       state.set('source', source);
       var model = new recline.Model.Dataset(source);
       state.set('model', model)
-      model.fetch().done(cb.bind(this, state));
+      model.fetch().done(cb.bind(this, state)).fail(function (err) {
+        console.log(err);
+        alert('Failed to fetch the resource');
+      });
     }
   });
 

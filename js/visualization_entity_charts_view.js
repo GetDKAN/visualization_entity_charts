@@ -49,7 +49,10 @@
           state: state,
           el: $el
         });
-        model.fetch().done(graph.render.bind(graph));
+        model.fetch().done(graph.render.bind(graph)).fail(function (err) {
+          console.log(err);
+          alert('Failed to fetch the resource');
+        });
       }
 
       function cleanURL(url){
