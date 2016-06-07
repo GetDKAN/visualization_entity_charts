@@ -327,7 +327,7 @@ this.recline.View.nvd3 = this.recline.View.nvd3 || {};
                 '<select id="control-chart-backend" class="form-control">' +
                   '<option value="csv">CSV</option>' +
                   '<option value="gdocs">Google Spreadsheet</option>' +
-                  '<option value="ckan">DataProxy</option>' +
+                  '<option value="dataproxy">DataProxy</option>' +
                 '</select>' +
               '</div>' +
               '<div id="controls">' +
