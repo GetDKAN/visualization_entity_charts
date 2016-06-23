@@ -1,3 +1,7 @@
+# Note: Deprecated
+
+This module has been moved into the main [Visualization Entity](https://github.com/NuCivic/visualization_entity) project. The repo is being maintained to support people using older (pre-7.x-1.0) versions of Visualization Entity which did not include the charts module. For new projects, please avoid this repository and download only [Visualization Entity](https://github.com/NuCivic/visualization_entity)
+
 # Visualization Entity Charts
 This modules provides the ability to create embedable NVD3 charts.
 
