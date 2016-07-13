@@ -1,5 +1,5 @@
 name = Visualization Entity Charts
-description = Create charts using nvd3
+description = QA test
 core = 7.x
 package = Other
 dependencies[] = chosen
