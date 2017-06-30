@@ -112,6 +112,7 @@
           var uuid = re.exec($resourceField.val())[1];
           // add proper handling of url if installation is in subdirectory
           var source = Drupal.settings.basePath+'node/' + uuid + '/download';
+          $sourceField.val(source);
         });
         sharedObject.state.on('change', function(){
           $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
