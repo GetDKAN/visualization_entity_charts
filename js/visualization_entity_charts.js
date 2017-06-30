@@ -110,7 +110,9 @@
           var re = /\[(.*?)\]/;
           var $sourceField = $('#control-chart-source');
           var uuid = re.exec($resourceField.val())[1];
-          $sourceField.val('/node/' + uuid + '/download');
+          // add proper handling of url if installation is in subdirectory
+          var source = Drupal.settings.basePath+'node/' + uuid + '/download';
+          $sourceField.val(source);
         });
         sharedObject.state.on('change', function(){
           $('#edit-field-ve-settings-und-0-value').val(JSON.stringify(sharedObject.state.toJSON()));
