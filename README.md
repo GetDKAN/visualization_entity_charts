@@ -65,12 +65,12 @@ Multiple filters can be applied to data.
 * **Format** Select an appropriate format for the X Axis labels.
 * **Axis Label**  will provide a custom label for the x axis. **Note:** Axis labels do not display for Pie Charts.
 * **Label rotation** will change angle of label values.
-* **Tick Values** with **step value** will update the number of ticks for the X axis. **NOTE:** If the range set for tick values is smaller than the range of complete data represented, the chart will be abreviated.
+* **Tick Values** with **step value** will update the number of ticks for the X axis. **NOTE:** If the range set for tick values is smaller than the range of complete data represented, the chart will be abbreviated.
 
 
 ###### Y Axis
 * **Axis Label** Provide a custom label for the x axis. **Note:** Axis labels do not display for Pie Charts. **Increase *distance* field until Label is visible on chart.
-* **Tick Values** with **step value** to update the number of ticks for the Y axis. **NOTE:** If the range set for tick values is smaller than the range of complete data represented, the chart will be abreviated.
+* **Tick Values** with **step value** to update the number of ticks for the Y axis. **NOTE:** If the range set for tick values is smaller than the range of complete data represented, the chart will be abbreviated.
 
 ###### General
 * **Color**: Set the color the chart is drawn in. Use either a [HEX color code](http://www.w3schools.com/tags/ref_colorpicker.asp) or a [valid css color name ](http://www.w3schools.com/cssref/css_colornames.asp)
